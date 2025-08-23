@@ -20,7 +20,9 @@ export const Hero = () => {
         {/* Creative Skyline Badge */}
         <div className="animate-slide-up mb-6">
           <a 
-            href="/skyline-portal" 
+            href="https://skyophq.com" 
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-card/60 backdrop-blur-sm border border-primary/30 rounded-full px-4 py-2 text-sm text-muted-foreground hover:border-primary/50 hover:text-primary transition-all duration-300 group"
           >
             <div className="w-2 h-2 bg-primary rounded-full animate-pulse-glow" />
