@@ -30,17 +30,20 @@ export const Navigation = () => {
 
           {/* Navigation Links */}
           <div className="hidden md:flex items-center gap-8">
-            <a href="#research" className="text-foreground hover:text-primary transition-colors">
+            <a href="/#research" className="text-foreground hover:text-primary transition-colors">
               Research
             </a>
-            <a href="#subsidiaries" className="text-foreground hover:text-primary transition-colors">
+            <a href="/#subsidiaries" className="text-foreground hover:text-primary transition-colors">
               Subsidiaries
             </a>
-            <a href="#investment" className="text-foreground hover:text-primary transition-colors">
+            <a href="/#investment" className="text-foreground hover:text-primary transition-colors">
               Investment
             </a>
-            <a href="#campus" className="text-foreground hover:text-primary transition-colors">
+            <a href="/#campus" className="text-foreground hover:text-primary transition-colors">
               Campus
+            </a>
+            <a href="/investor-portal" className="text-primary hover:text-primary-glow transition-colors font-medium">
+              Investor Portal
             </a>
           </div>
 
