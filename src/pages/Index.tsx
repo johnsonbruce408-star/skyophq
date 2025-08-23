@@ -1,8 +1,10 @@
 import { Navigation } from "@/components/Navigation";
-import { Hero } from "@/components/Hero";
-import { Subsidiaries } from "@/components/Subsidiaries";
-import { InvestmentFlow } from "@/components/InvestmentFlow";
-import { CampusMap } from "@/components/CampusMap";
+import { SkyoHero } from "@/components/SkyoHero";
+import { SkyoServices } from "@/components/SkyoServices";
+import { SkyoSolutions } from "@/components/SkyoSolutions";
+import { SkyoPortfolio } from "@/components/SkyoPortfolio";
+import { SkyoTeam } from "@/components/SkyoTeam";
+import { SkyoContact } from "@/components/SkyoContact";
 import { Footer } from "@/components/Footer";
 
 const Index = () => {
@@ -10,15 +12,21 @@ const Index = () => {
     <div className="min-h-screen">
       <Navigation />
       <main>
-        <Hero />
-        <div id="subsidiaries">
-          <Subsidiaries />
+        <SkyoHero />
+        <div id="services">
+          <SkyoServices />
         </div>
-        <div id="investment">
-          <InvestmentFlow />
+        <div id="solutions">
+          <SkyoSolutions />
         </div>
-        <div id="campus">
-          <CampusMap />
+        <div id="portfolio">
+          <SkyoPortfolio />
+        </div>
+        <div id="team">
+          <SkyoTeam />
+        </div>
+        <div id="contact">
+          <SkyoContact />
         </div>
       </main>
       <Footer />
