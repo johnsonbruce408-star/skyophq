@@ -17,6 +17,18 @@ export const Hero = () => {
       
       {/* Hero Content */}
       <div className="relative z-10 text-center max-w-6xl mx-auto px-6">
+        {/* Creative Skyline Badge */}
+        <div className="animate-slide-up mb-6">
+          <a 
+            href="/skyline-portal" 
+            className="inline-flex items-center gap-2 bg-card/60 backdrop-blur-sm border border-primary/30 rounded-full px-4 py-2 text-sm text-muted-foreground hover:border-primary/50 hover:text-primary transition-all duration-300 group"
+          >
+            <div className="w-2 h-2 bg-primary rounded-full animate-pulse-glow" />
+            <span>A division of</span>
+            <span className="text-primary font-medium group-hover:text-primary-glow">Skyline Operator Group</span>
+          </a>
+        </div>
+        
         <div className="animate-slide-up">
           <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
             VaultForge Labs
