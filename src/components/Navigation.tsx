@@ -18,15 +18,15 @@ export const Navigation = () => {
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center gap-3">
+          <a href="/skyline-portal" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
             <div className="w-10 h-10 bg-gradient-to-r from-primary to-accent rounded-lg flex items-center justify-center">
               <div className="w-2 h-2 bg-background rounded-full animate-pulse-glow"></div>
             </div>
             <div>
-              <div className="text-xl font-bold text-foreground">VaultForge</div>
-              <div className="text-xs text-muted-foreground">Labs</div>
+              <div className="text-xl font-bold text-foreground">VaultForge Labs</div>
+              <div className="text-xs text-muted-foreground">by Skyline Operator Group</div>
             </div>
-          </div>
+          </a>
 
           {/* Navigation Links */}
           <div className="hidden md:flex items-center gap-8">
@@ -44,6 +44,9 @@ export const Navigation = () => {
             </a>
             <a href="/investor-portal" className="text-primary hover:text-primary-glow transition-colors font-medium">
               Investor Portal
+            </a>
+            <a href="#contact" className="text-foreground hover:text-primary transition-colors">
+              Contact Us
             </a>
           </div>
 
