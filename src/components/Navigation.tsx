@@ -45,6 +45,9 @@ export const Navigation = () => {
             <a href="/investor-portal" className="text-primary hover:text-primary-glow transition-colors font-medium">
               Investor Portal
             </a>
+            <a href="/skyline-portal" className="text-primary hover:text-primary-glow transition-colors font-medium">
+              Skyline Portal
+            </a>
           </div>
 
           {/* CTA Button */}
