@@ -4,12 +4,53 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Shield, TrendingUp, Users, FileText, Clock, Mail, MapPin, ExternalLink } from "lucide-react";
-import { Navigation } from "@/components/Navigation";
+import { useState } from "react";
+
+const SkylineNavigation = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useState(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  });
+
+  return (
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      isScrolled ? 'bg-background/95 backdrop-blur-md border-b border-border' : 'bg-transparent'
+    }`}>
+      <div className="max-w-7xl mx-auto px-6 py-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary-glow rounded-lg flex items-center justify-center">
+              <div className="w-3 h-3 bg-background rounded-sm" />
+            </div>
+            <span className="text-xl font-bold text-foreground">Skyline Operator Group</span>
+          </div>
+          
+          <div className="hidden lg:flex items-center gap-8">
+            <a href="#investment" className="text-muted-foreground hover:text-primary transition-colors">Investment Opportunities</a>
+            <a href="#performance" className="text-muted-foreground hover:text-primary transition-colors">Performance</a>
+            <a href="#about" className="text-muted-foreground hover:text-primary transition-colors">About Partnership</a>
+            <a href="#accreditation" className="text-muted-foreground hover:text-primary transition-colors">Accreditation</a>
+            <a href="#contact" className="text-muted-foreground hover:text-primary transition-colors">Contact</a>
+          </div>
+          
+          <Button variant="hero" size="sm">
+            Access Portal
+          </Button>
+        </div>
+      </div>
+    </nav>
+  );
+};
 
 const SkylinePortal = () => {
   return (
     <div className="min-h-screen bg-background">
-      <Navigation />
+      <SkylineNavigation />
       
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
