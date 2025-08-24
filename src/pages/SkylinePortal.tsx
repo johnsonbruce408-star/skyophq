@@ -35,6 +35,7 @@ const SkylineNavigation = () => {
             <a href="#performance" className="text-muted-foreground hover:text-primary transition-colors">Performance</a>
             <a href="#about" className="text-muted-foreground hover:text-primary transition-colors">About Partnership</a>
             <a href="#accreditation" className="text-muted-foreground hover:text-primary transition-colors">Accreditation</a>
+            <a href="/social-hub" className="text-muted-foreground hover:text-primary transition-colors">Social Media</a>
             <a href="#contact" className="text-muted-foreground hover:text-primary transition-colors">Contact</a>
           </div>
           
