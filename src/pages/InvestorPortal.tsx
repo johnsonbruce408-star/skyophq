@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -115,9 +116,11 @@ const InvestorPortal = () => {
               </DialogContent>
             </Dialog>
             
-            <Button variant="tech" size="lg" className="text-lg px-8 py-4">
-              <Lock className="mr-2 h-5 w-5" />
-              Access Portal
+            <Button variant="tech" size="lg" className="text-lg px-8 py-4" asChild>
+              <Link to="/unified-portal">
+                <Lock className="mr-2 h-5 w-5" />
+                Access Portal
+              </Link>
             </Button>
           </div>
         </div>

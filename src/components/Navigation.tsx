@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 export const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -42,8 +43,8 @@ export const Navigation = () => {
             <a href="/#campus" className="text-foreground hover:text-primary transition-colors">
               Campus
             </a>
-            <a href="/investor-portal" className="text-primary hover:text-primary-glow transition-colors font-medium">
-              Investor Portal
+            <a href="/unified-portal" className="text-primary hover:text-primary-glow transition-colors font-medium">
+              Unified Portal
             </a>
             <a href="#contact" className="text-foreground hover:text-primary transition-colors">
               Contact Us
@@ -51,8 +52,8 @@ export const Navigation = () => {
           </div>
 
           {/* CTA Button */}
-          <Button variant="hero" size="sm">
-            Join Cohort
+          <Button variant="hero" size="sm" asChild>
+            <Link to="/unified-portal">Join Cohort</Link>
           </Button>
         </div>
       </div>

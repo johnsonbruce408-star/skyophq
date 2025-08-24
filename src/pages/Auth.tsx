@@ -67,7 +67,7 @@ export default function Auth() {
         toast.error(error.message || 'Failed to sign in');
       } else {
         toast.success('Welcome back!');
-        navigate('/investor-portal');
+        navigate('/unified-portal');
       }
     } catch (error) {
       toast.error('An unexpected error occurred');

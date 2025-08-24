@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Shield, TrendingUp, Users, FileText, Clock, Mail, MapPin, ExternalLink, ChevronDown } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 const SkylineNavigation = () => {
@@ -40,8 +41,8 @@ const SkylineNavigation = () => {
             <a href="#contact" className="text-muted-foreground hover:text-primary transition-colors">Contact</a>
           </div>
           
-          <Button variant="hero" size="sm">
-            Access Portal
+          <Button variant="hero" size="sm" asChild>
+            <Link to="/unified-portal">Access Portal</Link>
           </Button>
         </div>
       </div>
@@ -81,9 +82,11 @@ const SkylinePortal = () => {
               Access your private investment documents, complete subscriptions, and monitor your portfolio performance through our secure investor platform.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="hero" size="lg" className="text-lg px-8">
-                <ExternalLink className="w-5 h-5 mr-2" />
-                Access Investor Portal
+              <Button variant="hero" size="lg" className="text-lg px-8" asChild>
+                <Link to="/unified-portal">
+                  <ExternalLink className="w-5 h-5 mr-2" />
+                  Access Unified Portal
+                </Link>
               </Button>
               <Button variant="tech" size="lg" className="text-lg px-8">
                 Contact Us
@@ -233,7 +236,7 @@ const SkylinePortal = () => {
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button variant="hero">Get Verified ($59)</Button>
-                  <Button variant="tech">Access Portal</Button>
+                  <Button variant="tech" asChild><Link to="/unified-portal">Access Portal</Link></Button>
                 </div>
                 <p className="text-sm text-muted-foreground">
                   Securities offered through Regulation D 506(c) • Wyoming Limited Partnership
