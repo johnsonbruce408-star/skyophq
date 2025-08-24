@@ -128,12 +128,12 @@ const SocialHub = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100 dark:from-slate-900 dark:to-gray-800">
       <SocialNavigation />
       
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5" />
+        <div className="absolute inset-0 bg-gradient-to-br from-amber-50/30 via-slate-50/50 to-blue-50/30 dark:from-amber-900/10 dark:via-slate-900/50 dark:to-blue-900/10" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,hsl(var(--primary))_0%,transparent_50%)] opacity-10" />
         
         <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
@@ -176,39 +176,39 @@ const SocialHub = () => {
             {socialPlatforms.map((platform) => {
               const IconComponent = platform.icon;
               return (
-                <Card key={platform.name} className="group hover:shadow-lg transition-all duration-300 border-border/50">
-                  <CardHeader className="pb-3">
-                    <div className="flex items-center justify-between">
-                      <div className={`p-3 rounded-lg bg-gradient-to-r ${platform.color}`}>
-                        <IconComponent className="w-6 h-6 text-white" />
-                      </div>
-                      <Badge variant="outline" className="text-green-600 border-green-600">
-                        {platform.status}
-                      </Badge>
-                    </div>
-                    <CardTitle className="text-xl">{platform.name}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3">
-                      <div className="flex justify-between items-center">
-                        <span className="text-muted-foreground">Followers</span>
-                        <span className="font-semibold">{platform.followers}</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-muted-foreground">Engagement</span>
-                        <span className="font-semibold text-green-600">{platform.engagement}</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-muted-foreground">Last Post</span>
-                        <span className="text-sm">{platform.lastPost}</span>
-                      </div>
-                      <Button variant="outline" size="sm" className="w-full mt-4">
-                        <ExternalLink className="w-4 h-4 mr-2" />
-                        Manage Account
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
+            <Card key={platform.name} className="group hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20 border-2 border-blue-200 dark:border-blue-800 hover:border-blue-300 dark:hover:border-blue-700">
+              <CardHeader className="pb-3">
+                <div className="flex items-center justify-between">
+                  <div className={`p-3 rounded-lg bg-gradient-to-r ${platform.color} border border-blue-200`}>
+                    <IconComponent className="w-6 h-6 text-white" />
+                  </div>
+                  <Badge variant="outline" className="text-green-600 border-green-600 bg-green-50 dark:bg-green-900/20">
+                    {platform.status}
+                  </Badge>
+                </div>
+                <CardTitle className="text-xl">{platform.name}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-muted-foreground">Followers</span>
+                    <span className="font-semibold">{platform.followers}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-muted-foreground">Engagement</span>
+                    <span className="font-semibold text-green-600">{platform.engagement}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-muted-foreground">Last Post</span>
+                    <span className="text-sm">{platform.lastPost}</span>
+                  </div>
+                  <Button variant="outline" size="sm" className="w-full mt-4 border-blue-200 hover:bg-blue-50 dark:hover:bg-blue-900/20">
+                    <ExternalLink className="w-4 h-4 mr-2" />
+                    Manage Account
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
               );
             })}
           </div>
@@ -216,7 +216,7 @@ const SocialHub = () => {
       </section>
 
       {/* Analytics Overview */}
-      <section id="analytics" className="py-20 px-6 bg-muted/20">
+      <section id="analytics" className="py-20 px-6 bg-gradient-to-br from-blue-50/30 to-slate-100/50 dark:from-blue-900/10 dark:to-slate-800/50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">Performance Analytics</h2>
@@ -226,11 +226,11 @@ const SocialHub = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card>
+            <Card className="bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20 border-2 border-blue-200 dark:border-blue-800">
               <CardContent className="p-6">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-lg bg-primary/10">
-                    <Users className="w-6 h-6 text-primary" />
+                  <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-200">
+                    <Users className="w-6 h-6 text-blue-600" />
                   </div>
                   <div>
                     <div className="text-2xl font-bold">65.2K</div>
@@ -240,10 +240,10 @@ const SocialHub = () => {
               </CardContent>
             </Card>
             
-            <Card>
+            <Card className="bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20 border-2 border-blue-200 dark:border-blue-800">
               <CardContent className="p-6">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-lg bg-green-500/10">
+                  <div className="p-3 rounded-lg bg-green-500/10 border border-green-200">
                     <TrendingUp className="w-6 h-6 text-green-600" />
                   </div>
                   <div>
@@ -254,10 +254,10 @@ const SocialHub = () => {
               </CardContent>
             </Card>
             
-            <Card>
+            <Card className="bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20 border-2 border-blue-200 dark:border-blue-800">
               <CardContent className="p-6">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-lg bg-blue-500/10">
+                  <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-200">
                     <MessageCircle className="w-6 h-6 text-blue-600" />
                   </div>
                   <div>
@@ -268,10 +268,10 @@ const SocialHub = () => {
               </CardContent>
             </Card>
             
-            <Card>
+            <Card className="bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20 border-2 border-blue-200 dark:border-blue-800">
               <CardContent className="p-6">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-lg bg-purple-500/10">
+                  <div className="p-3 rounded-lg bg-purple-500/10 border border-purple-200">
                     <Share2 className="w-6 h-6 text-purple-600" />
                   </div>
                   <div>

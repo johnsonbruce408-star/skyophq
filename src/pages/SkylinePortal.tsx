@@ -50,7 +50,7 @@ const SkylineNavigation = () => {
 
 const SkylinePortal = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100 dark:from-slate-900 dark:to-gray-800">
       <SkylineNavigation />
       
       {/* Hero Section */}
@@ -59,7 +59,7 @@ const SkylinePortal = () => {
         <div className="absolute inset-0 tech-grid opacity-30" />
         
         {/* Gradient Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-primary/5" />
+        <div className="absolute inset-0 bg-gradient-to-br from-amber-50/30 via-slate-50/50 to-blue-50/30 dark:from-amber-900/10 dark:via-slate-900/50 dark:to-blue-900/10" />
         
         {/* Hero Content */}
         <div className="relative z-10 text-center max-w-6xl mx-auto px-6">
@@ -118,15 +118,15 @@ const SkylinePortal = () => {
 
           {/* Performance Metrics */}
           <div className="grid md:grid-cols-2 gap-8 mb-16 animate-slide-up" style={{ animationDelay: '0.3s' }}>
-            <Card className="bg-card/80 backdrop-blur-sm border border-primary/20 hover:border-primary/40 transition-all duration-300">
+            <Card className="bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20 border-2 border-blue-200 dark:border-blue-800 hover:border-blue-300 dark:hover:border-blue-700 transition-all duration-300">
               <CardHeader className="text-center">
-                <CardTitle className="text-4xl font-bold text-primary animate-pulse-glow">$86.00</CardTitle>
+                <CardTitle className="text-4xl font-bold text-blue-600 animate-pulse-glow">$86.00</CardTitle>
                 <p className="text-muted-foreground">Current Value</p>
               </CardHeader>
             </Card>
-            <Card className="bg-card/80 backdrop-blur-sm border border-accent/20 hover:border-accent/40 transition-all duration-300">
+            <Card className="bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20 border-2 border-blue-200 dark:border-blue-800 hover:border-blue-300 dark:hover:border-blue-700 transition-all duration-300">
               <CardHeader className="text-center">
-                <CardTitle className="text-4xl font-bold text-accent">+12.5%</CardTitle>
+                <CardTitle className="text-4xl font-bold text-green-600">+12.5%</CardTitle>
                 <p className="text-muted-foreground">Growth</p>
               </CardHeader>
             </Card>
@@ -148,10 +148,10 @@ const SkylinePortal = () => {
               Why Choose Skyline Prime Limited Partnership?
             </h3>
             <div className="grid md:grid-cols-3 gap-8">
-              <Card className="bg-card/80 backdrop-blur-sm border border-neuro/20 hover:border-neuro/40 transition-all duration-300 animate-slide-up">
+              <Card className="bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20 border-2 border-blue-200 dark:border-blue-800 hover:border-blue-300 dark:hover:border-blue-700 transition-all duration-300 animate-slide-up">
                 <CardHeader>
-                  <TrendingUp className="w-12 h-12 text-neuro mb-4 animate-pulse-glow" />
-                  <CardTitle className="text-neuro">Direct LP access to private company equity</CardTitle>
+                  <TrendingUp className="w-12 h-12 text-blue-600 mb-4 animate-pulse-glow" />
+                  <CardTitle className="text-blue-600">Direct LP access to private company equity</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground leading-relaxed">
@@ -159,10 +159,10 @@ const SkylinePortal = () => {
                   </p>
                 </CardContent>
               </Card>
-              <Card className="bg-card/80 backdrop-blur-sm border border-orbital/20 hover:border-orbital/40 transition-all duration-300 animate-slide-up" style={{ animationDelay: '0.2s' }}>
+              <Card className="bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20 border-2 border-blue-200 dark:border-blue-800 hover:border-blue-300 dark:hover:border-blue-700 transition-all duration-300 animate-slide-up" style={{ animationDelay: '0.2s' }}>
                 <CardHeader>
-                  <Users className="w-12 h-12 text-orbital mb-4 animate-pulse-glow" />
-                  <CardTitle className="text-orbital">Strong alignment between operators and investors</CardTitle>
+                  <Users className="w-12 h-12 text-blue-600 mb-4 animate-pulse-glow" />
+                  <CardTitle className="text-blue-600">Strong alignment between operators and investors</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground leading-relaxed">
@@ -170,10 +170,10 @@ const SkylinePortal = () => {
                   </p>
                 </CardContent>
               </Card>
-              <Card className="bg-card/80 backdrop-blur-sm border border-stellar/20 hover:border-stellar/40 transition-all duration-300 animate-slide-up" style={{ animationDelay: '0.4s' }}>
+              <Card className="bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20 border-2 border-blue-200 dark:border-blue-800 hover:border-blue-300 dark:hover:border-blue-700 transition-all duration-300 animate-slide-up" style={{ animationDelay: '0.4s' }}>
                 <CardHeader>
-                  <Shield className="w-12 h-12 text-stellar mb-4 animate-pulse-glow" />
-                  <CardTitle className="text-stellar">Experienced management focused on capital preservation</CardTitle>
+                  <Shield className="w-12 h-12 text-blue-600 mb-4 animate-pulse-glow" />
+                  <CardTitle className="text-blue-600">Experienced management focused on capital preservation</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground leading-relaxed">
