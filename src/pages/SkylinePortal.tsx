@@ -3,8 +3,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Shield, TrendingUp, Users, FileText, Clock, Mail, MapPin, ExternalLink } from "lucide-react";
+import { Shield, TrendingUp, Users, FileText, Clock, Mail, MapPin, ExternalLink, ChevronDown } from "lucide-react";
 import { useState } from "react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 const SkylineNavigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -49,6 +50,7 @@ const SkylineNavigation = () => {
 };
 
 const SkylinePortal = () => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100 dark:from-slate-900 dark:to-gray-800">
       <SkylineNavigation />
@@ -95,6 +97,16 @@ const SkylinePortal = () => {
         <div className="absolute top-40 right-32 w-3 h-3 bg-accent rounded-full animate-float opacity-40" style={{ animationDelay: '2s' }} />
         <div className="absolute bottom-32 left-1/3 w-1 h-1 bg-neuro rounded-full animate-float opacity-80" style={{ animationDelay: '4s' }} />
       </section>
+
+      {/* Collapsible Dropdown for Rest of Content */}
+      <Collapsible open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
+        <div className="flex justify-center py-8 bg-gradient-to-br from-slate-50 to-gray-100 dark:from-slate-900 dark:to-gray-800">
+          <CollapsibleTrigger className="flex items-center gap-2 text-lg font-medium text-primary hover:text-primary/80 transition-colors">
+            Explore Investment Details
+            <ChevronDown className={`h-5 w-5 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+          </CollapsibleTrigger>
+        </div>
+        <CollapsibleContent>
 
       {/* Investment Opportunity Section */}
       <section className="py-20 px-4 relative">
@@ -358,6 +370,8 @@ const SkylinePortal = () => {
           </div>
         </div>
       </footer>
+        </CollapsibleContent>
+      </Collapsible>
     </div>
   );
 };
