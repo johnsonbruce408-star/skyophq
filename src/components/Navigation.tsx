@@ -1,15 +1,21 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
 
   // Handle scroll effect
   if (typeof window !== "undefined") {
     window.addEventListener("scroll", () => {
       setIsScrolled(window.scrollY > 50);
     });
+  }
+
+  // Hide navigation when in unified portal (Prime LP and Operations mode)
+  if (location.pathname === '/unified-portal') {
+    return null;
   }
 
   return (
