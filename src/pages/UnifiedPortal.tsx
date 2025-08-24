@@ -86,7 +86,7 @@ export default function UnifiedPortal() {
               
               {/* Entity Switcher */}
               <div className="flex space-x-2 ml-8">
-                {(['skyline_operator', 'skyline_prime'] as Array<'skyline_operator' | 'skyline_prime'>).map((entity) => (
+                {(['skyline_operator', 'skyline_prime', ...(hasVaultForgeAccess ? ['vaultforge'] : [])] as Array<'skyline_operator' | 'skyline_prime' | 'vaultforge'>).map((entity) => (
                   <Button
                     key={entity}
                     variant={selectedEntity === entity ? "default" : "outline"}
@@ -94,7 +94,8 @@ export default function UnifiedPortal() {
                     onClick={() => setSelectedEntity(entity)}
                     className={selectedEntity === entity ? 'bg-blue-500 text-white hover:bg-blue-600' : 'text-gray-600 hover:text-blue-500 border-gray-300'}
                   >
-                    {entity === 'skyline_operator' ? 'Operations' : 'Prime LP'}
+                    {entity === 'skyline_operator' ? 'Operations' : 
+                     entity === 'skyline_prime' ? 'Prime LP' : 'VaultForge Labs'}
                   </Button>
                 ))}
               </div>
@@ -123,8 +124,14 @@ export default function UnifiedPortal() {
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-3xl font-bold text-gray-900">
-              {selectedEntity === 'skyline_operator' ? 'Operations Dashboard' : 'Prime LP Dashboard'}
+              {selectedEntity === 'skyline_operator' ? 'Operations Dashboard' :
+               selectedEntity === 'skyline_prime' ? 'Prime LP Dashboard' : 'VaultForge Labs'}
             </h2>
+            {selectedEntity === 'vaultforge' && (
+              <Badge variant="secondary" className="bg-blue-100 text-blue-700 border-blue-200">
+                $1M+ Investor Access
+              </Badge>
+            )}
           </div>
           
           {/* Key Stats */}
@@ -323,6 +330,62 @@ export default function UnifiedPortal() {
               </Card>
             )}
 
+            {selectedEntity === 'vaultforge' && hasVaultForgeAccess && (
+              <Card className="border border-blue-200 bg-gradient-to-br from-blue-50 to-white">
+                <CardHeader>
+                  <CardTitle className="text-blue-700">VaultForge Labs - Exclusive Access</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-600 mb-6">
+                    Advanced quantitative trading and institutional asset management platform exclusively for $1M+ investors.
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <Card className="p-6 bg-white border border-blue-200">
+                      <h3 className="font-semibold mb-4 text-blue-700">Premium Features</h3>
+                      <div className="space-y-3 text-sm">
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                          <span className="text-gray-700">AI-Driven Portfolio Optimization</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                          <span className="text-gray-700">Real-time Risk Analytics</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                          <span className="text-gray-700">Institutional Trading Desk</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                          <span className="text-gray-700">Regulatory Compliance Suite</span>
+                        </div>
+                      </div>
+                    </Card>
+                    
+                    <Card className="p-6 bg-white border border-blue-200">
+                      <h3 className="font-semibold mb-4 text-blue-700">Access Status</h3>
+                      <div className="space-y-3 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Qualification:</span>
+                          <span className="text-green-600 font-semibold">✓ Verified</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Platform Status:</span>
+                          <span className="text-blue-600 font-semibold">Beta Access</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Next Update:</span>
+                          <span className="text-gray-700 font-semibold">Q2 2024</span>
+                        </div>
+                      </div>
+                      <Button className="w-full mt-4 bg-blue-500 text-white hover:bg-blue-600">
+                        Access VaultForge Platform
+                      </Button>
+                    </Card>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
           </TabsContent>
 
           {hasAccess('finance') && (
