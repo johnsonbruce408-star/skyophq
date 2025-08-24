@@ -7,6 +7,7 @@ import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import InvestorPortal from "./pages/InvestorPortal";
+import UnifiedPortal from "./pages/UnifiedPortal";
 import SkylinePortal from "./pages/SkylinePortal";
 import SocialHub from "./pages/SocialHub";
 import LinkedInPortal from "./pages/LinkedInPortal";
@@ -26,6 +27,14 @@ const App = () => (
             element={
               <ProtectedRoute>
                 <InvestorPortal />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/unified-portal" 
+            element={
+              <ProtectedRoute>
+                <UnifiedPortal />
               </ProtectedRoute>
             } 
           />

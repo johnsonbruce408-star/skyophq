@@ -27,9 +27,9 @@ const Index = () => {
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="gap-2">
-                <Link to="/auth">
+                <Link to="/unified-portal">
                   <UserCheck className="h-5 w-5" />
-                  Sign In to Portal
+                  Access Unified Portal
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="gap-2">
