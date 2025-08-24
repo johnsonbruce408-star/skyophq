@@ -65,8 +65,8 @@ export default function UnifiedPortal() {
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-emerald-950/20 to-teal-950/30">
       <Navigation />
       
-      {/* Header */}
-      <header className="border-b bg-gradient-to-r from-emerald-950/50 to-teal-950/50 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      {/* Header with proper spacing from fixed navigation */}
+      <header className="border-b bg-gradient-to-r from-emerald-950/50 to-teal-950/50 backdrop-blur supports-[backdrop-filter]:bg-background/60 mt-20 relative z-40">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
