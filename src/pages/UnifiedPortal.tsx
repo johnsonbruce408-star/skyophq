@@ -25,20 +25,24 @@ export default function UnifiedPortal() {
   const { user, signOut } = useAuth();
   const [selectedEntity, setSelectedEntity] = useState<'skyline_operator' | 'skyline_prime' | 'vaultforge'>('skyline_operator');
   const [userRole] = useState<UserRole>('operations_director'); // This would come from your auth system
+  
+  // Mock investor equity amount - in real app, this would come from user data
+  const investorEquity = 1250000; // $1.25M - determines VaultForge access
+  const hasVaultForgeAccess = investorEquity >= 1000000;
 
   const mockStats: DashboardStats = {
-    fundPerformance: "+18.7%",
-    activeProjects: 12,
-    pendingTasks: 31,
-    upcomingMeetings: 8,
-    totalInvestors: 89,
-    pendingVerifications: 4
+    fundPerformance: "+12.5%",
+    activeProjects: 8,
+    pendingTasks: 15,
+    upcomingMeetings: 4,
+    totalInvestors: 47,
+    pendingVerifications: 2
   };
 
   const entityColors = {
-    skyline_operator: "from-emerald-500 to-teal-600", 
-    skyline_prime: "from-slate-600 to-slate-800",
-    vaultforge: "from-blue-500/60 to-blue-600/60"
+    skyline_operator: "from-blue-500 to-blue-600", 
+    skyline_prime: "from-gray-600 to-gray-700",
+    vaultforge: "from-blue-500 to-blue-600"
   };
 
   const rolePermissions = {
@@ -62,52 +66,52 @@ export default function UnifiedPortal() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-emerald-950/20 to-teal-950/30">
+    <div className="min-h-screen bg-white">
       <Navigation />
       
       {/* Header with proper spacing from fixed navigation */}
-      <header className="border-b bg-gradient-to-r from-emerald-950/50 to-teal-950/50 backdrop-blur supports-[backdrop-filter]:bg-background/60 mt-20 relative z-40">
+      <header className="border-b border-gray-200 bg-white mt-20 relative z-40">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-lg flex items-center justify-center">
-                  <div className="w-2 h-2 bg-background rounded-full animate-pulse"></div>
+                <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
+                  <div className="w-2 h-2 bg-white rounded-full"></div>
                 </div>
                 <div>
-                  <h1 className="text-xl font-bold text-emerald-400">Skyline Operator Group</h1>
-                  <p className="text-xs text-muted-foreground">Operations Portal</p>
+                  <h1 className="text-xl font-bold text-gray-900">Skyline Operator Group</h1>
+                  <p className="text-xs text-gray-500">Investment Portal</p>
                 </div>
               </div>
               
               {/* Entity Switcher */}
               <div className="flex space-x-2 ml-8">
-                {(['skyline_operator', 'skyline_prime', 'vaultforge'] as const).map((entity) => (
+                {(['skyline_operator', 'skyline_prime', ...(hasVaultForgeAccess ? ['vaultforge'] : [])] as Array<'skyline_operator' | 'skyline_prime' | 'vaultforge'>).map((entity) => (
                   <Button
                     key={entity}
-                    variant={selectedEntity === entity ? "default" : "ghost"}
+                    variant={selectedEntity === entity ? "default" : "outline"}
                     size="sm"
                     onClick={() => setSelectedEntity(entity)}
-                    className={selectedEntity === entity ? `bg-gradient-to-r ${entityColors[entity]} text-white border-emerald-400/20` : 'text-muted-foreground hover:text-emerald-400'}
+                    className={selectedEntity === entity ? 'bg-blue-500 text-white hover:bg-blue-600' : 'text-gray-600 hover:text-blue-500 border-gray-300'}
                   >
                     {entity === 'skyline_operator' ? 'Operations' : 
-                     entity === 'skyline_prime' ? 'Prime LP' : 'VaultForge'}
+                     entity === 'skyline_prime' ? 'Prime LP' : 'VaultForge Labs'}
                   </Button>
                 ))}
               </div>
             </div>
 
             <div className="flex items-center space-x-4">
-              <Badge variant="secondary" className="capitalize">
+              <Badge variant="secondary" className="capitalize bg-gray-100 text-gray-700">
                 {userRole.replace('_', ' ')}
               </Badge>
-              <Button variant="ghost" size="icon">
+              <Button variant="ghost" size="icon" className="text-gray-600 hover:text-gray-800">
                 <Bell className="h-4 w-4" />
               </Button>
               <Avatar>
-                <AvatarFallback>{user?.email?.[0]?.toUpperCase()}</AvatarFallback>
+                <AvatarFallback className="bg-blue-500 text-white">{user?.email?.[0]?.toUpperCase()}</AvatarFallback>
               </Avatar>
-              <Button variant="ghost" size="icon" onClick={signOut}>
+              <Button variant="ghost" size="icon" onClick={signOut} className="text-gray-600 hover:text-gray-800">
                 <LogOut className="h-4 w-4" />
               </Button>
             </div>
@@ -119,83 +123,84 @@ export default function UnifiedPortal() {
         {/* Dashboard Overview */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-3xl font-bold text-emerald-400">
+            <h2 className="text-3xl font-bold text-gray-900">
               {selectedEntity === 'skyline_operator' ? 'Operations Dashboard' :
-               selectedEntity === 'skyline_prime' ? 'Prime LP Dashboard' : 'VaultForge Preview'}
+               selectedEntity === 'skyline_prime' ? 'Prime LP Dashboard' : 'VaultForge Labs'}
             </h2>
             {selectedEntity === 'vaultforge' && (
-              <Badge variant="secondary" className="bg-blue-500/20 text-blue-400 border-blue-400/20">
-                Preview Access
+              <Badge variant="secondary" className="bg-blue-100 text-blue-700 border-blue-200">
+                $1M+ Investor Access
               </Badge>
             )}
           </div>
           
           {/* Key Stats */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <Card>
+            <Card className="border border-gray-200 bg-white">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Fund Performance</CardTitle>
-                <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                <CardTitle className="text-sm font-medium text-gray-700">Fund Performance</CardTitle>
+                <TrendingUp className="h-4 w-4 text-gray-500" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-green-600">{mockStats.fundPerformance}</div>
-                <p className="text-xs text-muted-foreground">YTD Return</p>
+                <p className="text-xs text-gray-500">YTD Return</p>
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="border border-gray-200 bg-white">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Active Projects</CardTitle>
-                <FileText className="h-4 w-4 text-muted-foreground" />
+                <CardTitle className="text-sm font-medium text-gray-700">Active Projects</CardTitle>
+                <FileText className="h-4 w-4 text-gray-500" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{mockStats.activeProjects}</div>
-                <p className="text-xs text-muted-foreground">Across all entities</p>
+                <div className="text-2xl font-bold text-gray-900">{mockStats.activeProjects}</div>
+                <p className="text-xs text-gray-500">Current initiatives</p>
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="border border-gray-200 bg-white">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Pending Tasks</CardTitle>
-                <Calendar className="h-4 w-4 text-muted-foreground" />
+                <CardTitle className="text-sm font-medium text-gray-700">Total Investors</CardTitle>
+                <Users className="h-4 w-4 text-gray-500" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{mockStats.pendingTasks}</div>
-                <p className="text-xs text-muted-foreground">Assigned to you</p>
+                <div className="text-2xl font-bold text-gray-900">{mockStats.totalInvestors}</div>
+                <p className="text-xs text-gray-500">Verified accredited investors</p>
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="border border-gray-200 bg-white">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Total Investors</CardTitle>
-                <Users className="h-4 w-4 text-muted-foreground" />
+                <CardTitle className="text-sm font-medium text-gray-700">Portfolio Value</CardTitle>
+                <DollarSign className="h-4 w-4 text-gray-500" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{mockStats.totalInvestors}</div>
-                <p className="text-xs text-muted-foreground">{mockStats.pendingVerifications} pending verification</p>
+                <div className="text-2xl font-bold text-gray-900">$86.00</div>
+                <p className="text-xs text-gray-500">Current unit value</p>
               </CardContent>
             </Card>
           </div>
 
-          {/* Alerts */}
-          <Card className="mb-8">
+          {/* Recent Activity */}
+          <Card className="mb-8 border border-gray-200 bg-white">
             <CardHeader>
-              <CardTitle className="flex items-center">
-                <AlertCircle className="h-5 w-5 mr-2" />
-                Recent Alerts
+              <CardTitle className="flex items-center text-gray-900">
+                <AlertCircle className="h-5 w-5 mr-2 text-blue-500" />
+                Recent Activity
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
                 {recentAlerts.map((alert, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 border rounded-lg">
+                  <div key={index} className="flex items-center justify-between p-3 border border-gray-200 rounded-lg bg-gray-50">
                     <div className="flex items-center space-x-3">
-                      <Badge variant={alert.type === 'urgent' ? 'destructive' : alert.type === 'warning' ? 'default' : 'secondary'}>
+                      <Badge variant={alert.type === 'urgent' ? 'destructive' : alert.type === 'warning' ? 'default' : 'secondary'} 
+                             className={alert.type === 'info' ? 'bg-blue-100 text-blue-700' : ''}>
                         {alert.type}
                       </Badge>
-                      <span>{alert.message}</span>
+                      <span className="text-gray-700">{alert.message}</span>
                     </div>
-                    <span className="text-sm text-muted-foreground">{alert.time}</span>
+                    <span className="text-sm text-gray-500">{alert.time}</span>
                   </div>
                 ))}
               </div>
@@ -205,79 +210,64 @@ export default function UnifiedPortal() {
 
         {/* Main Portal Modules */}
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-8">
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            {hasAccess('finance') && <TabsTrigger value="finance">Finance</TabsTrigger>}
-            {hasAccess('operations') && <TabsTrigger value="operations">Operations</TabsTrigger>}
-            {hasAccess('marketing') && <TabsTrigger value="marketing">Marketing</TabsTrigger>}
-            {hasAccess('social') && <TabsTrigger value="social">Social Media</TabsTrigger>}
-            {hasAccess('legal') && <TabsTrigger value="legal">Legal</TabsTrigger>}
-            {hasAccess('portfolio') && <TabsTrigger value="portfolio">Portfolio</TabsTrigger>}
-            {hasAccess('verification') && <TabsTrigger value="verification">Verification</TabsTrigger>}
+          <TabsList className="grid w-full grid-cols-4 bg-gray-100">
+            <TabsTrigger value="overview" className="data-[state=active]:bg-white data-[state=active]:text-blue-600">Overview</TabsTrigger>
+            {hasAccess('portfolio') && <TabsTrigger value="portfolio" className="data-[state=active]:bg-white data-[state=active]:text-blue-600">Portfolio</TabsTrigger>}
+            {hasAccess('finance') && <TabsTrigger value="finance" className="data-[state=active]:bg-white data-[state=active]:text-blue-600">Finance</TabsTrigger>}
+            {hasAccess('verification') && <TabsTrigger value="verification" className="data-[state=active]:bg-white data-[state=active]:text-blue-600">Investor Services</TabsTrigger>}
           </TabsList>
 
           <TabsContent value="overview" className="space-y-6">
             {selectedEntity === 'skyline_operator' && (
-              <Card className="border-emerald-500/20 bg-gradient-to-br from-emerald-950/50 to-teal-950/30">
+              <Card className="border border-gray-200 bg-white">
                 <CardHeader>
-                  <CardTitle className="text-emerald-400">Skyline Operator Group - Command Center</CardTitle>
+                  <CardTitle className="text-gray-900">Skyline Operator Group - Operations Center</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground mb-6">
-                    Operational excellence across all investment initiatives and portfolio management activities.
+                  <p className="text-gray-600 mb-6">
+                    Professional asset management with verified returns and asset-backed protection for accredited investors.
                   </p>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <Card className="p-4 bg-slate-900/50 border-emerald-500/20">
-                      <h3 className="font-semibold mb-3 text-emerald-400">Operation Controls</h3>
-                      <div className="space-y-3">
-                        <Button variant="outline" size="sm" className="w-full justify-start border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/10">
-                          Deploy Capital ($2.3M Ready)
-                        </Button>
-                        <Button variant="outline" size="sm" className="w-full justify-start border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/10">
-                          Portfolio Rebalancing
-                        </Button>
-                        <Button variant="outline" size="sm" className="w-full justify-start border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/10">
-                          Risk Assessment Review
-                        </Button>
-                      </div>
-                    </Card>
-                    
-                    <Card className="p-4 bg-slate-900/50 border-emerald-500/20">
-                      <h3 className="font-semibold mb-3 text-emerald-400">Live Operations</h3>
-                      <div className="space-y-2 text-sm">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <Card className="p-6 bg-blue-50 border border-blue-200">
+                      <h3 className="font-semibold mb-4 text-blue-700">Current Performance</h3>
+                      <div className="space-y-3 text-sm">
                         <div className="flex justify-between">
-                          <span>Active Deals:</span>
-                          <span className="text-emerald-400 font-mono">7</span>
+                          <span className="text-gray-600">Current Unit Value:</span>
+                          <span className="text-blue-600 font-semibold">$86.00</span>
                         </div>
                         <div className="flex justify-between">
-                          <span>Capital Deployed:</span>
-                          <span className="text-emerald-400 font-mono">$8.7M</span>
+                          <span className="text-gray-600">Annual Return:</span>
+                          <span className="text-green-600 font-semibold">+12.5% IRR</span>
                         </div>
                         <div className="flex justify-between">
-                          <span>ROI This Quarter:</span>
-                          <span className="text-emerald-400 font-mono">+18.7%</span>
+                          <span className="text-gray-600">Asset Protection:</span>
+                          <span className="text-blue-600 font-semibold">1st Priority</span>
                         </div>
                         <div className="flex justify-between">
-                          <span>Risk Level:</span>
-                          <span className="text-yellow-400 font-mono">Moderate</span>
+                          <span className="text-gray-600">Response Time:</span>
+                          <span className="text-blue-600 font-semibold">24 hours</span>
                         </div>
                       </div>
                     </Card>
                     
-                    <Card className="p-4 bg-slate-900/50 border-emerald-500/20">
-                      <h3 className="font-semibold mb-3 text-emerald-400">Priority Actions</h3>
-                      <div className="space-y-2 text-sm">
+                    <Card className="p-6 bg-gray-50 border border-gray-200">
+                      <h3 className="font-semibold mb-4 text-gray-700">Investment Structure</h3>
+                      <div className="space-y-3 text-sm">
                         <div className="flex items-center gap-2">
-                          <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-                          <span>Due diligence: TechCorp acquisition</span>
+                          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                          <span className="text-gray-600">SEC Compliant - Regulation D</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
-                          <span>LP meeting preparation</span>
+                          <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                          <span className="text-gray-600">Wyoming LLC Structure</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                          <span>Q1 performance report</span>
+                          <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                          <span className="text-gray-600">Asset-Backed Protection</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                          <span className="text-gray-600">Accredited Investors Only</span>
                         </div>
                       </div>
                     </Card>
@@ -287,31 +277,52 @@ export default function UnifiedPortal() {
             )}
 
             {selectedEntity === 'skyline_prime' && (
-              <Card className="border-slate-500/20 bg-gradient-to-br from-slate-950/50 to-slate-900/30">
+              <Card className="border border-gray-200 bg-white">
                 <CardHeader>
-                  <CardTitle className="text-slate-300">Skyline Prime Limited Partnership</CardTitle>
+                  <CardTitle className="text-gray-900">Skyline Prime Limited Partnership</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground mb-6">
-                    Exclusive limited partnership management and investor relations.
+                  <p className="text-gray-600 mb-6">
+                    Exclusive limited partnership with priority access to curated investment opportunities.
                   </p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <Card className="p-4 bg-slate-900/70 border-slate-500/20">
-                      <h3 className="font-semibold mb-3 text-slate-300">LP Management</h3>
-                      <div className="space-y-2 text-sm">
-                        <div>Capital Commitments: $24.5M</div>
-                        <div>Called Capital: $18.2M</div>
-                        <div>Distributions YTD: $3.1M</div>
-                        <div>Active LPs: 23</div>
+                    <Card className="p-6 bg-gray-50 border border-gray-200">
+                      <h3 className="font-semibold mb-4 text-gray-700">Partnership Overview</h3>
+                      <div className="space-y-3 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Capital Commitments:</span>
+                          <span className="text-gray-900 font-semibold">$24.5M</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Called Capital:</span>
+                          <span className="text-gray-900 font-semibold">$18.2M</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Distributions YTD:</span>
+                          <span className="text-green-600 font-semibold">$3.1M</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Active Partners:</span>
+                          <span className="text-gray-900 font-semibold">23</span>
+                        </div>
                       </div>
                     </Card>
                     
-                    <Card className="p-4 bg-slate-900/70 border-slate-500/20">
-                      <h3 className="font-semibold mb-3 text-slate-300">Upcoming Events</h3>
-                      <div className="space-y-2 text-sm">
-                        <div>Annual LP Meeting: March 15</div>
-                        <div>Capital Call #4: March 30</div>
-                        <div>Distribution #2: April 15</div>
+                    <Card className="p-6 bg-blue-50 border border-blue-200">
+                      <h3 className="font-semibold mb-4 text-blue-700">Upcoming Events</h3>
+                      <div className="space-y-3 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Annual Meeting:</span>
+                          <span className="text-blue-600 font-semibold">March 15</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Capital Call #4:</span>
+                          <span className="text-blue-600 font-semibold">March 30</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Distribution #2:</span>
+                          <span className="text-green-600 font-semibold">April 15</span>
+                        </div>
                       </div>
                     </Card>
                   </div>
@@ -319,37 +330,56 @@ export default function UnifiedPortal() {
               </Card>
             )}
 
-            {selectedEntity === 'vaultforge' && (
-              <Card className="border-blue-500/20 bg-gradient-to-br from-blue-950/30 to-blue-900/20 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500/5 to-transparent animate-pulse"></div>
+            {selectedEntity === 'vaultforge' && hasVaultForgeAccess && (
+              <Card className="border border-blue-200 bg-gradient-to-br from-blue-50 to-white">
                 <CardHeader>
-                  <CardTitle className="text-blue-400">VaultForge Capital - Coming Soon</CardTitle>
+                  <CardTitle className="text-blue-700">VaultForge Labs - Exclusive Access</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground mb-6">
-                    Advanced quantitative trading and institutional asset management platform. Full access pending regulatory approval.
+                  <p className="text-gray-600 mb-6">
+                    Advanced quantitative trading and institutional asset management platform exclusively for $1M+ investors.
                   </p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <Card className="p-4 bg-blue-950/30 border-blue-500/20">
-                      <h3 className="font-semibold mb-3 text-blue-400">Preview Features</h3>
-                      <div className="space-y-2 text-sm opacity-60">
-                        <div>• AI-Driven Portfolio Optimization</div>
-                        <div>• Real-time Risk Analytics</div>
-                        <div>• Institutional Trading Desk</div>
-                        <div>• Regulatory Compliance Suite</div>
+                    <Card className="p-6 bg-white border border-blue-200">
+                      <h3 className="font-semibold mb-4 text-blue-700">Premium Features</h3>
+                      <div className="space-y-3 text-sm">
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                          <span className="text-gray-700">AI-Driven Portfolio Optimization</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                          <span className="text-gray-700">Real-time Risk Analytics</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                          <span className="text-gray-700">Institutional Trading Desk</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                          <span className="text-gray-700">Regulatory Compliance Suite</span>
+                        </div>
                       </div>
                     </Card>
                     
-                    <Card className="p-4 bg-blue-950/30 border-blue-500/20">
-                      <h3 className="font-semibold mb-3 text-blue-400">Launch Timeline</h3>
-                      <div className="space-y-2 text-sm">
-                        <div>Beta Testing: Q2 2024</div>
-                        <div>Regulatory Review: Q3 2024</div>
-                        <div>Limited Release: Q4 2024</div>
-                        <div>Full Launch: Q1 2025</div>
+                    <Card className="p-6 bg-white border border-blue-200">
+                      <h3 className="font-semibold mb-4 text-blue-700">Access Status</h3>
+                      <div className="space-y-3 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Qualification:</span>
+                          <span className="text-green-600 font-semibold">✓ Verified</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Platform Status:</span>
+                          <span className="text-blue-600 font-semibold">Beta Access</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">Next Update:</span>
+                          <span className="text-gray-700 font-semibold">Q2 2024</span>
+                        </div>
                       </div>
-                      <Button className="w-full mt-4 bg-blue-600/20 border border-blue-500/30 text-blue-400 hover:bg-blue-600/30">
-                        Request Early Access
+                      <Button className="w-full mt-4 bg-blue-500 text-white hover:bg-blue-600">
+                        Access VaultForge Platform
                       </Button>
                     </Card>
                   </div>
@@ -360,13 +390,28 @@ export default function UnifiedPortal() {
 
           {hasAccess('finance') && (
             <TabsContent value="finance">
-              <Card>
+              <Card className="border border-gray-200 bg-white">
                 <CardHeader>
-                  <CardTitle>Finance Module</CardTitle>
+                  <CardTitle className="text-gray-900">Financial Overview</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p>Fund accounting, budgets, invoices, and expense tracking for all entities.</p>
-                  {/* Finance module content would go here */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <Card className="p-4 bg-gray-50 border border-gray-200">
+                      <h3 className="font-semibold mb-2 text-gray-700">Assets Under Management</h3>
+                      <div className="text-2xl font-bold text-gray-900">$47.2M</div>
+                      <p className="text-sm text-gray-500">Total portfolio value</p>
+                    </Card>
+                    <Card className="p-4 bg-blue-50 border border-blue-200">
+                      <h3 className="font-semibold mb-2 text-blue-700">Monthly Performance</h3>
+                      <div className="text-2xl font-bold text-green-600">+2.1%</div>
+                      <p className="text-sm text-gray-500">Last 30 days</p>
+                    </Card>
+                    <Card className="p-4 bg-gray-50 border border-gray-200">
+                      <h3 className="font-semibold mb-2 text-gray-700">Cash Position</h3>
+                      <div className="text-2xl font-bold text-gray-900">$3.8M</div>
+                      <p className="text-sm text-gray-500">Available for deployment</p>
+                    </Card>
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>
@@ -374,32 +419,42 @@ export default function UnifiedPortal() {
 
           {hasAccess('verification') && (
             <TabsContent value="verification">
-              <Card>
+              <Card className="border border-gray-200 bg-white">
                 <CardHeader>
-                  <CardTitle>Investor Verification & E-Signature</CardTitle>
+                  <CardTitle className="text-gray-900">Investor Services</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <Card className="p-4">
-                        <h3 className="font-semibold mb-2">Pending Verifications</h3>
-                        <Badge variant="destructive">{mockStats.pendingVerifications} pending</Badge>
-                        <Button className="w-full mt-3" variant="outline">
+                  <div className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <Card className="p-6 bg-red-50 border border-red-200">
+                        <h3 className="font-semibold mb-3 text-red-700">Pending Verifications</h3>
+                        <div className="text-2xl font-bold text-red-600 mb-2">{mockStats.pendingVerifications}</div>
+                        <p className="text-sm text-gray-600 mb-4">Accreditation reviews required</p>
+                        <Button className="w-full bg-red-500 text-white hover:bg-red-600">
                           Review Submissions
                         </Button>
                       </Card>
                       
-                      <Card className="p-4">
-                        <h3 className="font-semibold mb-2">E-Signature Status</h3>
-                        <div className="space-y-2 text-sm">
-                          <div>PPMs: 12 pending</div>
-                          <div>Subscription Agreements: 5 pending</div>
-                          <div>LPAs: 3 pending</div>
+                      <Card className="p-6 bg-blue-50 border border-blue-200">
+                        <h3 className="font-semibold mb-3 text-blue-700">Document Status</h3>
+                        <div className="space-y-2 text-sm text-gray-600">
+                          <div className="flex justify-between">
+                            <span>PPMs Signed:</span>
+                            <span className="font-semibold">45/47</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Subscription Agreements:</span>
+                            <span className="font-semibold">42/47</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>LPAs Complete:</span>
+                            <span className="font-semibold">23/23</span>
+                          </div>
                         </div>
                       </Card>
                     </div>
                     
-                    <Button className="w-full">
+                    <Button className="w-full bg-blue-500 text-white hover:bg-blue-600">
                       Start New Investor Onboarding
                     </Button>
                   </div>
