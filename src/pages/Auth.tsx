@@ -93,38 +93,44 @@ export default function Auth() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="w-full max-w-md space-y-8">
-        <div className="text-center space-y-4">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 flex items-center justify-center p-4">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 tech-grid opacity-5"></div>
+      
+      <div className="w-full max-w-md space-y-8 relative z-10">
+        {/* Header with SkyOpHQ Branding */}
+        <div className="text-center space-y-6">
           <div className="flex justify-center">
-            <div className="h-12 w-12 bg-gradient-to-r from-primary to-primary-glow rounded-lg flex items-center justify-center glow-effect">
-              <Building2 className="h-6 w-6 text-primary-foreground" />
+            <div className="h-16 w-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+              <div className="w-3 h-3 bg-white rounded-full animate-pulse-glow"></div>
             </div>
           </div>
-          <div>
-            <h2 className="text-3xl font-bold tracking-tight">VaultForge Capital</h2>
-            <p className="text-muted-foreground mt-2">
-              Secure access to your investment portal
+          <div className="space-y-2">
+            <h1 className="text-4xl font-bold tracking-tight text-foreground">SkyOpHQ</h1>
+            <p className="text-lg font-medium text-blue-600">Operations Portal</p>
+            <p className="text-muted-foreground">
+              Secure access to Skyline Operator Group systems
             </p>
           </div>
         </div>
 
-        <Card className="w-full bg-card/80 backdrop-blur-sm border-border/50">
-          <CardHeader className="space-y-1">
-            <div className="flex items-center justify-center gap-2 text-primary mb-2">
+        {/* Auth Card */}
+        <Card className="w-full bg-card/95 backdrop-blur-md border border-border/50 shadow-xl">
+          <CardHeader className="space-y-4 pb-6">
+            <div className="flex items-center justify-center gap-2 text-blue-600 mb-2">
               <ShieldCheck className="h-5 w-5" />
-              <span className="text-sm font-medium">Accredited Investors Only</span>
+              <span className="text-sm font-medium">Authorized Personnel Only</span>
             </div>
-            <CardTitle className="text-xl text-center">Access Your Portal</CardTitle>
+            <CardTitle className="text-2xl text-center text-foreground">Portal Access</CardTitle>
             <CardDescription className="text-center">
-              Sign in to view your portfolio and investment documents
+              Sign in to access operations dashboard and portfolio management
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pb-8">
             <Tabs defaultValue="signin" className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="signin">Sign In</TabsTrigger>
-                <TabsTrigger value="signup">Sign Up</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-2 mb-6">
+                <TabsTrigger value="signin" className="data-[state=active]:bg-blue-500 data-[state=active]:text-white">Sign In</TabsTrigger>
+                <TabsTrigger value="signup" className="data-[state=active]:bg-blue-500 data-[state=active]:text-white">Register</TabsTrigger>
               </TabsList>
               
               <TabsContent value="signin" className="space-y-4">
@@ -135,11 +141,12 @@ export default function Auth() {
                       name="email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Email</FormLabel>
+                          <FormLabel className="text-foreground">Email Address</FormLabel>
                           <FormControl>
                             <Input
                               type="email"
-                              placeholder="investor@example.com"
+                              placeholder="operator@skyophq.com"
+                              className="h-11"
                               {...field}
                             />
                           </FormControl>
@@ -152,9 +159,9 @@ export default function Auth() {
                       name="password"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Password</FormLabel>
+                          <FormLabel className="text-foreground">Password</FormLabel>
                           <FormControl>
-                            <Input type="password" {...field} />
+                            <Input type="password" className="h-11" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -162,16 +169,21 @@ export default function Auth() {
                     />
                     <Button 
                       type="submit" 
-                      className="w-full" 
+                      className="w-full h-11 bg-blue-500 hover:bg-blue-600 text-white font-medium" 
                       disabled={isLoading}
                     >
-                      {isLoading ? 'Signing in...' : 'Sign In'}
+                      {isLoading ? 'Authenticating...' : 'Access Portal'}
                     </Button>
                   </form>
                 </Form>
               </TabsContent>
 
               <TabsContent value="signup" className="space-y-4">
+                <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                  <p className="text-sm text-blue-700">
+                    <strong>Note:</strong> Registration requires approval from Skyline Operator Group management.
+                  </p>
+                </div>
                 <Form {...signUpForm}>
                   <form onSubmit={signUpForm.handleSubmit(onSignUp)} className="space-y-4">
                     <FormField
@@ -179,9 +191,9 @@ export default function Auth() {
                       name="fullName"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Full Name</FormLabel>
+                          <FormLabel className="text-foreground">Full Name</FormLabel>
                           <FormControl>
-                            <Input placeholder="John Doe" {...field} />
+                            <Input placeholder="John Doe" className="h-11" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -192,11 +204,12 @@ export default function Auth() {
                       name="email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Email</FormLabel>
+                          <FormLabel className="text-foreground">Corporate Email</FormLabel>
                           <FormControl>
                             <Input
                               type="email"
-                              placeholder="investor@example.com"
+                              placeholder="operator@skyophq.com"
+                              className="h-11"
                               {...field}
                             />
                           </FormControl>
@@ -209,9 +222,9 @@ export default function Auth() {
                       name="password"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Password</FormLabel>
+                          <FormLabel className="text-foreground">Password</FormLabel>
                           <FormControl>
-                            <Input type="password" {...field} />
+                            <Input type="password" className="h-11" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -222,9 +235,9 @@ export default function Auth() {
                       name="confirmPassword"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Confirm Password</FormLabel>
+                          <FormLabel className="text-foreground">Confirm Password</FormLabel>
                           <FormControl>
-                            <Input type="password" {...field} />
+                            <Input type="password" className="h-11" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -232,17 +245,35 @@ export default function Auth() {
                     />
                     <Button 
                       type="submit" 
-                      className="w-full" 
+                      className="w-full h-11 bg-blue-500 hover:bg-blue-600 text-white font-medium" 
                       disabled={isLoading}
                     >
-                      {isLoading ? 'Creating account...' : 'Create Account'}
+                      {isLoading ? 'Submitting Application...' : 'Request Access'}
                     </Button>
                   </form>
                 </Form>
               </TabsContent>
             </Tabs>
+            
+            {/* Footer */}
+            <div className="mt-8 pt-6 border-t border-border/50">
+              <p className="text-xs text-muted-foreground text-center">
+                © 2024 Skyline Operator Group • SkyOpHQ Portal
+              </p>
+              <p className="text-xs text-muted-foreground text-center mt-1">
+                Secure operations management platform
+              </p>
+            </div>
           </CardContent>
         </Card>
+
+        {/* Security Badge */}
+        <div className="flex justify-center">
+          <div className="flex items-center gap-2 px-4 py-2 bg-card/80 backdrop-blur-sm border border-border/50 rounded-full">
+            <ShieldCheck className="h-4 w-4 text-green-500" />
+            <span className="text-xs text-muted-foreground">Enterprise Security Enabled</span>
+          </div>
+        </div>
       </div>
     </div>
   );
