@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { toast } from 'sonner';
+import { DocumentUpload } from './DocumentUpload';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/hooks/useAuth';
 import { 
   FileText, 
   Download, 
@@ -21,77 +24,93 @@ interface Document {
   description: string;
   type: 'restricted' | 'public';
   category: 'legal' | 'financial' | 'performance' | 'subscription';
-  fileSize: string;
-  lastUpdated: string;
+  file_size: number;
+  file_path: string;
+  updated_at: string;
   icon: React.ComponentType<{ className?: string }>;
 }
-
-const documents: Document[] = [
-  {
-    id: '1',
-    title: 'Private Placement Memorandum (PPM)',
-    description: 'Comprehensive investment overview and risk disclosures',
-    type: 'restricted',
-    category: 'legal',
-    fileSize: '2.4 MB',
-    lastUpdated: '2024-01-15',
-    icon: Shield,
-  },
-  {
-    id: '2',
-    title: 'Limited Partnership Agreement',
-    description: 'Legal structure and terms of the investment partnership',
-    type: 'restricted',
-    category: 'legal',
-    fileSize: '1.8 MB',
-    lastUpdated: '2024-01-10',
-    icon: FileText,
-  },
-  {
-    id: '3',
-    title: 'Subscription Documents',
-    description: 'Required forms for investment participation',
-    type: 'restricted',
-    category: 'subscription',
-    fileSize: '0.9 MB',
-    lastUpdated: '2024-01-20',
-    icon: DollarSign,
-  },
-  {
-    id: '4',
-    title: 'Q4 2023 Financial Statements',
-    description: 'Quarterly financial performance and fund NAV',
-    type: 'restricted',
-    category: 'financial',
-    fileSize: '3.2 MB',
-    lastUpdated: '2024-01-25',
-    icon: BarChart3,
-  },
-  {
-    id: '5',
-    title: 'Performance Data Dashboard',
-    description: 'Interactive portfolio performance metrics',
-    type: 'restricted',
-    category: 'performance',
-    fileSize: '1.5 MB',
-    lastUpdated: '2024-01-28',
-    icon: TrendingUp,
-  },
-  {
-    id: '6',
-    title: 'Fund Overview',
-    description: 'General information about investment strategy',
-    type: 'public',
-    category: 'legal',
-    fileSize: '0.7 MB',
-    lastUpdated: '2024-01-05',
-    icon: FileText,
-  },
-];
 
 export function DocumentAccess() {
   const [isAccredited, setIsAccredited] = useState(false);
   const [downloading, setDownloading] = useState<string | null>(null);
+  const [documents, setDocuments] = useState<Document[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [userRole, setUserRole] = useState<string | null>(null);
+  const { user } = useAuth();
+
+  // Check user role
+  const checkUserRole = async () => {
+    if (!user) return;
+    
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', user.id)
+        .single();
+
+      if (error) throw error;
+      setUserRole(data?.role || 'user');
+    } catch (error) {
+      console.error('Error checking user role:', error);
+    }
+  };
+
+  // Get icon for document category
+  const getDocumentIcon = (category: string) => {
+    switch (category) {
+      case 'legal': return Shield;
+      case 'financial': return BarChart3;
+      case 'performance': return TrendingUp;
+      case 'subscription': return DollarSign;
+      default: return FileText;
+    }
+  };
+
+  // Format file size
+  const formatFileSize = (bytes: number) => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  };
+
+  // Load documents from database
+  const loadDocuments = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('documents')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+
+      const formattedDocs: Document[] = (data || []).map(doc => ({
+        id: doc.id,
+        title: doc.title,
+        description: doc.description || '',
+        type: doc.document_type as 'restricted' | 'public',
+        category: doc.category as 'legal' | 'financial' | 'performance' | 'subscription',
+        file_size: doc.file_size,
+        file_path: doc.file_path,
+        updated_at: doc.updated_at,
+        icon: getDocumentIcon(doc.category)
+      }));
+
+      setDocuments(formattedDocs);
+    } catch (error: any) {
+      console.error('Error loading documents:', error);
+      toast.error('Failed to load documents');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadDocuments();
+    checkUserRole();
+  }, [user]);
 
   const handleDownload = async (document: Document) => {
     if (document.type === 'restricted' && !isAccredited) {
@@ -100,11 +119,30 @@ export function DocumentAccess() {
     }
 
     setDownloading(document.id);
-    // Simulate download delay
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    toast.success(`Downloaded ${document.title}`);
-    setDownloading(null);
+    try {
+      const { data, error } = await supabase.storage
+        .from('client-documents')
+        .download(document.file_path);
+
+      if (error) throw error;
+
+      // Create download link
+      const url = URL.createObjectURL(data);
+      const a = window.document.createElement('a');
+      a.href = url;
+      a.download = document.title;
+      window.document.body.appendChild(a);
+      a.click();
+      window.document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      toast.success(`Downloaded ${document.title}`);
+    } catch (error: any) {
+      console.error('Download error:', error);
+      toast.error(`Download failed: ${error.message}`);
+    } finally {
+      setDownloading(null);
+    }
   };
 
   const handleVerifyAccreditation = () => {
@@ -158,9 +196,9 @@ export function DocumentAccess() {
                 <div className="flex items-center gap-4 text-xs text-muted-foreground">
                   <span className="flex items-center gap-1">
                     <Calendar className="h-3 w-3" />
-                    Updated {new Date(document.lastUpdated).toLocaleDateString()}
+                    Updated {new Date(document.updated_at).toLocaleDateString()}
                   </span>
-                  <span>{document.fileSize}</span>
+                  <span>{formatFileSize(document.file_size)}</span>
                 </div>
               </div>
               <Button
@@ -211,35 +249,40 @@ export function DocumentAccess() {
                 </p>
               </div>
             </div>
-            {!isAccredited && (
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button variant="outline" className="gap-2">
-                    <Shield className="h-4 w-4" />
-                    Verify Accreditation
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Accredited Investor Verification</DialogTitle>
-                  </DialogHeader>
-                  <div className="space-y-4">
-                    <p className="text-sm text-muted-foreground">
-                      To access restricted documents, you must verify your status as an accredited investor.
-                      This includes individuals with:
-                    </p>
-                    <ul className="list-disc list-inside text-sm space-y-1 text-muted-foreground">
-                      <li>Net worth exceeding $1 million (excluding primary residence)</li>
-                      <li>Annual income exceeding $200,000 ($300,000 joint) for the last 2 years</li>
-                      <li>Professional certifications (Series 7, 65, 82)</li>
-                    </ul>
-                    <Button onClick={handleVerifyAccreditation} className="w-full">
-                      I Confirm My Accredited Status
+            <div className="flex items-center gap-2">
+              {userRole === 'admin' && (
+                <DocumentUpload onUploadSuccess={loadDocuments} />
+              )}
+              {!isAccredited && (
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="outline" className="gap-2">
+                      <Shield className="h-4 w-4" />
+                      Verify Accreditation
                     </Button>
-                  </div>
-                </DialogContent>
-              </Dialog>
-            )}
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Accredited Investor Verification</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4">
+                      <p className="text-sm text-muted-foreground">
+                        To access restricted documents, you must verify your status as an accredited investor.
+                        This includes individuals with:
+                      </p>
+                      <ul className="list-disc list-inside text-sm space-y-1 text-muted-foreground">
+                        <li>Net worth exceeding $1 million (excluding primary residence)</li>
+                        <li>Annual income exceeding $200,000 ($300,000 joint) for the last 2 years</li>
+                        <li>Professional certifications (Series 7, 65, 82)</li>
+                      </ul>
+                      <Button onClick={handleVerifyAccreditation} className="w-full">
+                        I Confirm My Accredited Status
+                      </Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              )}
+            </div>
           </div>
           {isAccredited && (
             <Badge variant="secondary" className="w-fit bg-green-500/10 text-green-600 border-green-500/20">

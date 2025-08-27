@@ -14,6 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
+      documents: {
+        Row: {
+          category: string
+          content_type: string
+          created_at: string
+          description: string | null
+          document_type: string
+          file_name: string
+          file_path: string
+          file_size: number
+          id: string
+          title: string
+          updated_at: string
+          uploaded_by: string | null
+        }
+        Insert: {
+          category: string
+          content_type: string
+          created_at?: string
+          description?: string | null
+          document_type: string
+          file_name: string
+          file_path: string
+          file_size: number
+          id?: string
+          title: string
+          updated_at?: string
+          uploaded_by?: string | null
+        }
+        Update: {
+          category?: string
+          content_type?: string
+          created_at?: string
+          description?: string | null
+          document_type?: string
+          file_name?: string
+          file_path?: string
+          file_size?: number
+          id?: string
+          title?: string
+          updated_at?: string
+          uploaded_by?: string | null
+        }
+        Relationships: []
+      }
       fund_allocation: {
         Row: {
           asset_class: Database["public"]["Enums"]["asset_class"]
