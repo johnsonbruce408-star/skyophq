@@ -7,6 +7,7 @@ import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import InvestorPortal from "./pages/InvestorPortal";
+import InvestorDeck from "./pages/InvestorDeck";
 import UnifiedPortal from "./pages/UnifiedPortal";
 import SkylinePortal from "./pages/SkylinePortal";
 import SocialHub from "./pages/SocialHub";
@@ -39,6 +40,7 @@ const App = () => (
             } 
           />
           <Route path="/skyline-portal" element={<SkylinePortal />} />
+          <Route path="/investor-deck" element={<InvestorDeck />} />
           <Route path="/social-hub" element={<SocialHub />} />
           <Route path="/linkedin-portal" element={<LinkedInPortal />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
