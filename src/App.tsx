@@ -31,14 +31,6 @@ const App = () => (
               </ProtectedRoute>
             } 
           />
-          <Route 
-            path="/unified-portal" 
-            element={
-              <ProtectedRoute>
-                <UnifiedPortal />
-              </ProtectedRoute>
-            } 
-          />
           <Route path="/skyline-portal" element={<SkylinePortal />} />
           <Route path="/investor-deck" element={<InvestorDeck />} />
           <Route path="/social-hub" element={<SocialHub />} />
