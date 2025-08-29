@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { toast } from 'sonner';
 import { Upload, Plus, X } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/hooks/useAuth';
 
 interface DocumentUploadProps {
   onUploadSuccess?: () => void;
@@ -24,6 +25,7 @@ export function DocumentUpload({ onUploadSuccess }: DocumentUploadProps) {
     category: '',
     documentType: 'restricted' as 'restricted' | 'public'
   });
+  const { user } = useAuth();
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -45,11 +47,16 @@ export function DocumentUpload({ onUploadSuccess }: DocumentUploadProps) {
     }
 
     setUploading(true);
+    if (!user?.id) {
+      toast.error('You must be logged in to upload');
+      setUploading(false);
+      return;
+    }
     try {
       // Generate unique file path
       const fileExt = selectedFile.name.split('.').pop();
       const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
-      const filePath = `documents/${fileName}`;
+      const filePath = `${user.id}/${fileName}`;
 
       // Upload file to storage
       const { error: uploadError } = await supabase.storage
@@ -69,7 +76,8 @@ export function DocumentUpload({ onUploadSuccess }: DocumentUploadProps) {
           file_size: selectedFile.size,
           content_type: selectedFile.type,
           category: formData.category,
-          document_type: formData.documentType
+          document_type: formData.documentType,
+          uploaded_by: user.id
         });
 
       if (dbError) throw dbError;
