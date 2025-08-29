@@ -196,207 +196,249 @@ export default function UnifiedPortal() {
           </Card>
         </div>
 
-        {/* Main Portal Modules */}
-        <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 bg-gray-100">
-            <TabsTrigger value="overview" className="data-[state=active]:bg-white data-[state=active]:text-blue-600">Overview</TabsTrigger>
-            {hasAccess('portfolio') && <TabsTrigger value="portfolio" className="data-[state=active]:bg-white data-[state=active]:text-blue-600">Portfolio</TabsTrigger>}
-            {hasAccess('finance') && <TabsTrigger value="finance" className="data-[state=active]:bg-white data-[state=active]:text-blue-600">Finance</TabsTrigger>}
-            {hasAccess('verification') && <TabsTrigger value="verification" className="data-[state=active]:bg-white data-[state=active]:text-blue-600">Investor Services</TabsTrigger>}
-          </TabsList>
-
-          <TabsContent value="overview" className="space-y-6">
-            {selectedEntity === 'skyline_operator' && (
-              <Card className="border border-gray-200 bg-white">
-                <CardHeader>
-                  <CardTitle className="text-gray-900">SkyOpHQ - Operations Center</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600 mb-6">
-                    Professional asset management with verified returns and asset-backed protection for accredited investors.
-                  </p>
-                  <div className="flex flex-col gap-6">
-                    <Card className="p-6 bg-blue-50 border border-blue-200">
-                      <h3 className="font-semibold mb-4 text-blue-700">Current Performance</h3>
-                      <div className="space-y-3 text-sm">
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Current Unit Value:</span>
-                          <span className="text-blue-600 font-semibold">$86.00</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Annual Return:</span>
-                          <span className="text-green-600 font-semibold">+12.5% IRR</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Asset Protection:</span>
-                          <span className="text-blue-600 font-semibold">1st Priority</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Response Time:</span>
-                          <span className="text-blue-600 font-semibold">24 hours</span>
-                        </div>
-                      </div>
-                    </Card>
-                    
-                    <Card className="p-6 bg-gray-50 border border-gray-200">
-                      <h3 className="font-semibold mb-4 text-gray-700">Investment Structure</h3>
-                      <div className="space-y-3 text-sm">
-                        <div className="flex items-center gap-2">
-                          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                          <span className="text-gray-600">SEC Compliant - Regulation D</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                          <span className="text-gray-600">Wyoming LLC Structure</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                          <span className="text-gray-600">Asset-Backed Protection</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                          <span className="text-gray-600">Accredited Investors Only</span>
-                        </div>
-                      </div>
-                    </Card>
-                  </div>
-                </CardContent>
+        {/* Onboarding Steps */}
+        <Card className="mb-8 border border-gray-200 bg-white">
+          <CardHeader>
+            <CardTitle className="flex items-center text-gray-900">
+              <Calendar className="h-5 w-5 mr-2 text-blue-500" />
+              Onboarding Steps
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <Card className="p-4 bg-blue-50 border border-blue-200">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-semibold">1</div>
+                  <h3 className="font-semibold text-blue-700">Get Accredited</h3>
+                </div>
+                <p className="text-sm text-gray-600 mb-3">Verify your accredited investor status</p>
+                <Button size="sm" className="w-full bg-blue-500 hover:bg-blue-600 text-white">
+                  Start Verification
+                </Button>
               </Card>
+              
+              <Card className="p-4 bg-gray-50 border border-gray-200">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-8 h-8 bg-gray-400 text-white rounded-full flex items-center justify-center text-sm font-semibold">2</div>
+                  <h3 className="font-semibold text-gray-700">Complete Documents</h3>
+                </div>
+                <p className="text-sm text-gray-600 mb-3">Submit required legal documentation</p>
+                <Button size="sm" variant="outline" className="w-full" disabled>
+                  Upload Documents
+                </Button>
+              </Card>
+              
+              <Card className="p-4 bg-gray-50 border border-gray-200">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-8 h-8 bg-gray-400 text-white rounded-full flex items-center justify-center text-sm font-semibold">3</div>
+                  <h3 className="font-semibold text-gray-700">Pay BlueSky Fee</h3>
+                </div>
+                <p className="text-sm text-gray-600 mb-3">Complete platform onboarding fee</p>
+                <Button size="sm" variant="outline" className="w-full" disabled>
+                  Pay Fee
+                </Button>
+              </Card>
+              
+              <Card className="p-4 bg-gray-50 border border-gray-200">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-8 h-8 bg-gray-400 text-white rounded-full flex items-center justify-center text-sm font-semibold">4</div>
+                  <h3 className="font-semibold text-gray-700">ACH Transfer</h3>
+                </div>
+                <p className="text-sm text-gray-600 mb-3">Set up automatic bank transfer</p>
+                <Button size="sm" variant="outline" className="w-full" disabled>
+                  Setup ACH
+                </Button>
+              </Card>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Overview Section */}
+        <Card className="mb-8 border border-gray-200 bg-white">
+          <CardHeader>
+            <CardTitle className="text-gray-900">Overview</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            {selectedEntity === 'skyline_operator' && (
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">SkyOpHQ - Operations Center</h3>
+                <p className="text-gray-600 mb-6">
+                  Professional asset management with verified returns and asset-backed protection for accredited investors.
+                </p>
+                <div className="flex flex-col gap-6">
+                  <Card className="p-6 bg-blue-50 border border-blue-200">
+                    <h3 className="font-semibold mb-4 text-blue-700">Current Performance</h3>
+                    <div className="space-y-3 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Current Unit Value:</span>
+                        <span className="text-blue-600 font-semibold">$86.00</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Annual Return:</span>
+                        <span className="text-green-600 font-semibold">+12.5% IRR</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Asset Protection:</span>
+                        <span className="text-blue-600 font-semibold">1st Priority</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Response Time:</span>
+                        <span className="text-blue-600 font-semibold">24 hours</span>
+                      </div>
+                    </div>
+                  </Card>
+                  
+                  <Card className="p-6 bg-gray-50 border border-gray-200">
+                    <h3 className="font-semibold mb-4 text-gray-700">Investment Structure</h3>
+                    <div className="space-y-3 text-sm">
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <span className="text-gray-600">SEC Compliant - Regulation D</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                        <span className="text-gray-600">Wyoming LLC Structure</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                        <span className="text-gray-600">Asset-Backed Protection</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <span className="text-gray-600">Accredited Investors Only</span>
+                      </div>
+                    </div>
+                  </Card>
+                </div>
+              </div>
             )}
 
             {selectedEntity === 'skyline_prime' && (
-              <Card className="border border-gray-200 bg-white">
-                <CardHeader>
-                  <CardTitle className="text-gray-900">Skyline Prime Limited Partnership</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600 mb-6">
-                    Exclusive limited partnership with priority access to curated investment opportunities.
-                  </p>
-                  <div className="flex flex-col gap-6">
-                    <Card className="p-6 bg-gray-50 border border-gray-200">
-                      <h3 className="font-semibold mb-4 text-gray-700">Partnership Overview</h3>
-                      <div className="space-y-3 text-sm">
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Capital Commitments:</span>
-                          <span className="text-gray-900 font-semibold">$24.5M</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Called Capital:</span>
-                          <span className="text-gray-900 font-semibold">$18.2M</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Distributions YTD:</span>
-                          <span className="text-green-600 font-semibold">$3.1M</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Active Partners:</span>
-                          <span className="text-gray-900 font-semibold">23</span>
-                        </div>
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Skyline Prime Limited Partnership</h3>
+                <p className="text-gray-600 mb-6">
+                  Exclusive limited partnership with priority access to curated investment opportunities.
+                </p>
+                <div className="flex flex-col gap-6">
+                  <Card className="p-6 bg-gray-50 border border-gray-200">
+                    <h3 className="font-semibold mb-4 text-gray-700">Partnership Overview</h3>
+                    <div className="space-y-3 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Capital Commitments:</span>
+                        <span className="text-gray-900 font-semibold">$24.5M</span>
                       </div>
-                    </Card>
-                    
-                    <Card className="p-6 bg-blue-50 border border-blue-200">
-                      <h3 className="font-semibold mb-4 text-blue-700">Upcoming Events</h3>
-                      <div className="space-y-3 text-sm">
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Annual Meeting:</span>
-                          <span className="text-blue-600 font-semibold">March 15</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Capital Call #4:</span>
-                          <span className="text-blue-600 font-semibold">March 30</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Distribution #2:</span>
-                          <span className="text-green-600 font-semibold">April 15</span>
-                        </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Called Capital:</span>
+                        <span className="text-gray-900 font-semibold">$18.2M</span>
                       </div>
-                    </Card>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-
-          </TabsContent>
-
-          {hasAccess('finance') && (
-            <TabsContent value="finance">
-              <Card className="border border-gray-200 bg-white">
-                <CardHeader>
-                  <CardTitle className="text-gray-900">Financial Overview</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-col gap-6">
-                    <Card className="p-4 bg-gray-50 border border-gray-200">
-                      <h3 className="font-semibold mb-2 text-gray-700">Assets Under Management</h3>
-                      <div className="text-2xl font-bold text-gray-900">$47.2M</div>
-                      <p className="text-sm text-gray-500">Total portfolio value</p>
-                    </Card>
-                    <Card className="p-4 bg-blue-50 border border-blue-200">
-                      <h3 className="font-semibold mb-2 text-blue-700">Monthly Performance</h3>
-                      <div className="text-2xl font-bold text-green-600">+2.1%</div>
-                      <p className="text-sm text-gray-500">Last 30 days</p>
-                    </Card>
-                    <Card className="p-4 bg-gray-50 border border-gray-200">
-                      <h3 className="font-semibold mb-2 text-gray-700">Cash Position</h3>
-                      <div className="text-2xl font-bold text-gray-900">$3.8M</div>
-                      <p className="text-sm text-gray-500">Available for deployment</p>
-                    </Card>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          )}
-
-          {hasAccess('verification') && (
-            <TabsContent value="verification">
-              <Card className="border border-gray-200 bg-white">
-                <CardHeader>
-                  <CardTitle className="text-gray-900">Investor Services</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <Card className="p-6 bg-red-50 border border-red-200">
-                        <h3 className="font-semibold mb-3 text-red-700">Pending Verifications</h3>
-                        <div className="text-2xl font-bold text-red-600 mb-2">{mockStats.pendingVerifications}</div>
-                        <p className="text-sm text-gray-600 mb-4">Accreditation reviews required</p>
-                        <Button className="w-full bg-red-500 text-white hover:bg-red-600">
-                          Review Submissions
-                        </Button>
-                      </Card>
-                      
-                      <Card className="p-6 bg-blue-50 border border-blue-200">
-                        <h3 className="font-semibold mb-3 text-blue-700">Document Status</h3>
-                        <div className="space-y-2 text-sm text-gray-600">
-                          <div className="flex justify-between">
-                            <span>PPMs Signed:</span>
-                            <span className="font-semibold">45/47</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span>Subscription Agreements:</span>
-                            <span className="font-semibold">42/47</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span>LPAs Complete:</span>
-                            <span className="font-semibold">23/23</span>
-                          </div>
-                        </div>
-                      </Card>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Distributions YTD:</span>
+                        <span className="text-green-600 font-semibold">$3.1M</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Active Partners:</span>
+                        <span className="text-gray-900 font-semibold">23</span>
+                      </div>
                     </div>
-                    
-                    <Button className="w-full bg-blue-500 text-white hover:bg-blue-600">
-                      Start New Investor Onboarding
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          )}
+                  </Card>
+                  
+                  <Card className="p-6 bg-blue-50 border border-blue-200">
+                    <h3 className="font-semibold mb-4 text-blue-700">Upcoming Events</h3>
+                    <div className="space-y-3 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Annual Meeting:</span>
+                        <span className="text-blue-600 font-semibold">March 15</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Capital Call #4:</span>
+                        <span className="text-blue-600 font-semibold">March 30</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Distribution #2:</span>
+                        <span className="text-green-600 font-semibold">April 15</span>
+                      </div>
+                    </div>
+                  </Card>
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
 
-          {/* Additional module tabs would be implemented similarly */}
-        </Tabs>
+        {/* Portfolio Section */}
+        {hasAccess('portfolio') && (
+          <Card className="mb-8 border border-gray-200 bg-white">
+            <CardHeader>
+              <CardTitle className="text-gray-900">Portfolio</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-600">Portfolio management and tracking tools will be displayed here.</p>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Finance Section */}
+        {hasAccess('finance') && (
+          <Card className="mb-8 border border-gray-200 bg-white">
+            <CardHeader>
+              <CardTitle className="text-gray-900">Finance</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-col gap-6">
+                <Card className="p-4 bg-gray-50 border border-gray-200">
+                  <h3 className="font-semibold mb-2 text-gray-700">Assets Under Management</h3>
+                  <div className="text-2xl font-bold text-gray-900">$47.2M</div>
+                  <p className="text-sm text-gray-500">Total portfolio value</p>
+                </Card>
+                <Card className="p-4 bg-blue-50 border border-blue-200">
+                  <h3 className="font-semibold mb-2 text-blue-700">Monthly Performance</h3>
+                  <div className="text-2xl font-bold text-green-600">+2.1%</div>
+                  <p className="text-sm text-gray-500">Last 30 days</p>
+                </Card>
+                <Card className="p-4 bg-gray-50 border border-gray-200">
+                  <h3 className="font-semibold mb-2 text-gray-700">Cash Position</h3>
+                  <div className="text-2xl font-bold text-gray-900">$3.8M</div>
+                  <p className="text-sm text-gray-500">Available for deployment</p>
+                </Card>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Investor Services Section */}
+        {hasAccess('verification') && (
+          <Card className="mb-8 border border-gray-200 bg-white">
+            <CardHeader>
+              <CardTitle className="text-gray-900">Investor Services</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-col gap-6">
+                <Card className="p-4 bg-yellow-50 border border-yellow-200">
+                  <h3 className="font-semibold mb-2 text-yellow-700">Pending Verifications</h3>
+                  <div className="text-2xl font-bold text-yellow-600">{mockStats.pendingVerifications}</div>
+                  <p className="text-sm text-gray-500">Awaiting review</p>
+                </Card>
+                <Card className="p-4 bg-blue-50 border border-blue-200">
+                  <h3 className="font-semibold mb-2 text-blue-700">Document Status</h3>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Subscription Agreements:</span>
+                      <span className="text-green-600 font-semibold">Complete</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Accreditation Letters:</span>
+                      <span className="text-yellow-600 font-semibold">Pending</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">KYC Documentation:</span>
+                      <span className="text-green-600 font-semibold">Complete</span>
+                    </div>
+                  </div>
+                </Card>
+              </div>
+            </CardContent>
+          </Card>
+        )}
       </div>
 
       <Footer />
