@@ -5,9 +5,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Bell, Settings, LogOut, DollarSign, Users, TrendingUp, FileText, Calendar, AlertCircle } from "lucide-react";
+import { Bell, Settings, LogOut, DollarSign, Users, TrendingUp, FileText, Calendar, AlertCircle, Upload } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
+import { DocumentUpload } from "@/components/DocumentUpload";
+import { DocumentAccess } from "@/components/DocumentAccess";
 
 // Role definitions
 type UserRole = 'operations_director' | 'portfolio_manager' | 'accountant' | 'marketing_manager' | 'social_media_manager' | 'paralegal' | 'operator';
@@ -217,13 +219,20 @@ export default function UnifiedPortal() {
                 </Button>
               </Card>
               
-              <Card className="p-4 bg-gray-50 border border-gray-200">
+              <Card className="p-4 bg-green-50 border border-green-200">
                 <div className="flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 bg-gray-400 text-white rounded-full flex items-center justify-center text-sm font-semibold">2</div>
-                  <h3 className="font-semibold text-gray-700">Complete Documents</h3>
+                  <div className="w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-semibold">2</div>
+                  <h3 className="font-semibold text-green-700">Complete Documents</h3>
                 </div>
                 <p className="text-sm text-gray-600 mb-3">Submit required legal documentation</p>
-                <Button size="sm" variant="outline" className="w-full" disabled>
+                <Button 
+                  size="sm" 
+                  className="w-full bg-green-500 hover:bg-green-600 text-white"
+                  onClick={() => {
+                    const documentsSection = document.getElementById('legal-documents-section');
+                    documentsSection?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
                   Upload Documents
                 </Button>
               </Card>
@@ -439,6 +448,42 @@ export default function UnifiedPortal() {
             </CardContent>
           </Card>
         )}
+
+        {/* Legal Documents Section */}
+        <Card id="legal-documents-section" className="mb-8 border border-gray-200 bg-white">
+          <CardHeader>
+            <CardTitle className="flex items-center text-gray-900">
+              <Upload className="h-5 w-5 mr-2 text-blue-500" />
+              Legal Documents
+            </CardTitle>
+            <p className="text-gray-600 mt-2">
+              Upload and manage your legal documentation for investment compliance
+            </p>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-6">
+              {/* Document Upload Component */}
+              <div className="border border-dashed border-gray-300 rounded-lg p-6 bg-gray-50">
+                <div className="text-center">
+                  <Upload className="h-8 w-8 text-gray-400 mx-auto mb-2" />
+                  <h3 className="text-lg font-semibold text-gray-700 mb-2">Upload Legal Documents</h3>
+                  <p className="text-gray-500 mb-4">
+                    Required documents: Subscription Agreement, Accreditation Letter, PPM, Operating Agreement
+                  </p>
+                  <DocumentUpload onUploadSuccess={() => {
+                    console.log('Document uploaded successfully');
+                  }} />
+                </div>
+              </div>
+
+              {/* Document Access Component */}
+              <div className="border border-gray-300 rounded-lg p-6">
+                <h3 className="text-lg font-semibold text-gray-700 mb-4">Your Documents</h3>
+                <DocumentAccess />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
       <Footer />
