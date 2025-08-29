@@ -215,7 +215,7 @@ export default function UnifiedPortal() {
                   <p className="text-gray-600 mb-6">
                     Professional asset management with verified returns and asset-backed protection for accredited investors.
                   </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="flex flex-col gap-6">
                     <Card className="p-6 bg-blue-50 border border-blue-200">
                       <h3 className="font-semibold mb-4 text-blue-700">Current Performance</h3>
                       <div className="space-y-3 text-sm">
@@ -273,7 +273,7 @@ export default function UnifiedPortal() {
                   <p className="text-gray-600 mb-6">
                     Exclusive limited partnership with priority access to curated investment opportunities.
                   </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="flex flex-col gap-6">
                     <Card className="p-6 bg-gray-50 border border-gray-200">
                       <h3 className="font-semibold mb-4 text-gray-700">Partnership Overview</h3>
                       <div className="space-y-3 text-sm">
@@ -327,7 +327,7 @@ export default function UnifiedPortal() {
                   <CardTitle className="text-gray-900">Financial Overview</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="flex flex-col gap-6">
                     <Card className="p-4 bg-gray-50 border border-gray-200">
                       <h3 className="font-semibold mb-2 text-gray-700">Assets Under Management</h3>
                       <div className="text-2xl font-bold text-gray-900">$47.2M</div>
