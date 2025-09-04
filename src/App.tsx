@@ -4,7 +4,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
-import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import InvestorPortal from "./pages/InvestorPortal";
 import InvestorDeck from "./pages/InvestorDeck";
@@ -22,7 +21,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
+          <Route path="/" element={<SkylineAdsLanding />} />
           <Route path="/auth" element={<Auth />} />
           <Route 
             path="/investor-portal" 

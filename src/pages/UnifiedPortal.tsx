@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Bell, Settings, LogOut, DollarSign, Users, TrendingUp, FileText, Calendar, AlertCircle, Upload } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
-import { Footer } from "@/components/Footer";
+
 import { DocumentUpload } from "@/components/DocumentUpload";
 import { DocumentAccess } from "@/components/DocumentAccess";
 
@@ -486,7 +486,7 @@ export default function UnifiedPortal() {
         </Card>
       </div>
 
-      <Footer />
+      
     </div>
   );
 }

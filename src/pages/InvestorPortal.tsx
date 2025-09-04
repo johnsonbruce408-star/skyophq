@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Navigation } from "@/components/Navigation";
-import { Footer } from "@/components/Footer";
+
 import { EdocManager } from "@/components/EdocManager";
 import { 
   FileText, 
@@ -605,7 +605,7 @@ const InvestorPortal = () => {
         </Tabs>
       </div>
 
-      <Footer />
+      
     </div>
   );
 };
