@@ -9,28 +9,11 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Navigation } from "@/components/Navigation";
-
 import { EdocManager } from "@/components/EdocManager";
-import { 
-  FileText, 
-  Shield, 
-  TrendingUp, 
-  Users, 
-  DollarSign,
-  CheckCircle,
-  AlertTriangle,
-  Bell,
-  LogOut,
-  Calendar,
-  AlertCircle,
-  PenTool,
-  Building,
-  Target
-} from "lucide-react";
+import { FileText, Shield, TrendingUp, Users, DollarSign, CheckCircle, AlertTriangle, Bell, LogOut, Calendar, AlertCircle, PenTool, Building, Target } from "lucide-react";
 
 // Role definitions
 type UserRole = 'operations_director' | 'portfolio_manager' | 'accountant' | 'lp' | 'admin' | 'user';
-
 interface DashboardStats {
   fundPerformance: string;
   activeProjects: number;
@@ -39,9 +22,11 @@ interface DashboardStats {
   pendingSignatures: number;
   nextDistribution: string;
 }
-
 const InvestorPortal = () => {
-  const { user, signOut } = useAuth();
+  const {
+    user,
+    signOut
+  } = useAuth();
   const [isAccredited, setIsAccredited] = useState<boolean | null>(null);
   const [showVerification, setShowVerification] = useState(false);
   const [selectedEntity, setSelectedEntity] = useState<'skyline_operator' | 'skyline_prime'>('skyline_operator');
@@ -55,7 +40,6 @@ const InvestorPortal = () => {
     pendingSignatures: 2,
     nextDistribution: "Q2 2024"
   };
-
   const rolePermissions = {
     operations_director: ['all'],
     portfolio_manager: ['portfolio', 'finance', 'operations'],
@@ -64,91 +48,73 @@ const InvestorPortal = () => {
     admin: ['all'],
     user: ['portfolio', 'documents']
   };
-
   const hasAccess = (module: string) => {
     return rolePermissions[userRole].includes('all') || rolePermissions[userRole].includes(module);
   };
-
-  const recentAlerts = [
-    { type: 'urgent', message: 'Partnership agreement requires signature', time: '2 hours ago' },
-    { type: 'info', message: 'Q1 distribution processed: $125,000', time: '1 day ago' },
-    { type: 'success', message: 'Capital call #3 completed successfully', time: '2 days ago' }
-  ];
-
-  const investmentDocuments = [
-    { name: "Private Placement Memorandum (PPM)", icon: FileText, restricted: true },
-    { name: "Limited Partnership Agreement", icon: FileText, restricted: true },
-    { name: "Subscription Documents", icon: FileText, restricted: true },
-    { name: "Financial Statements & Performance Data", icon: TrendingUp, restricted: true },
-    { name: "Research Portfolio Overview", icon: Users, restricted: false },
-    { name: "Asset Protection Guidelines", icon: Shield, restricted: false }
-  ];
-
-  const portfolioMetrics = [
-    { label: "Current NAV", value: "$86.00", change: "+12.5%", positive: true },
-    { label: "Total Investment", value: "$25M", change: "Across 25 Cohorts", positive: true },
-    { label: "Asset Recovery Rate", value: "96%", change: "Conservative Scenario", positive: true },
-    { label: "Distribution Schedule", value: "Quarterly", change: "Next: Q1 2025", positive: true }
-  ];
-
-  return (
-    <div className="min-h-screen bg-background">
+  const recentAlerts = [{
+    type: 'urgent',
+    message: 'Partnership agreement requires signature',
+    time: '2 hours ago'
+  }, {
+    type: 'info',
+    message: 'Q1 distribution processed: $125,000',
+    time: '1 day ago'
+  }, {
+    type: 'success',
+    message: 'Capital call #3 completed successfully',
+    time: '2 days ago'
+  }];
+  const investmentDocuments = [{
+    name: "Private Placement Memorandum (PPM)",
+    icon: FileText,
+    restricted: true
+  }, {
+    name: "Limited Partnership Agreement",
+    icon: FileText,
+    restricted: true
+  }, {
+    name: "Subscription Documents",
+    icon: FileText,
+    restricted: true
+  }, {
+    name: "Financial Statements & Performance Data",
+    icon: TrendingUp,
+    restricted: true
+  }, {
+    name: "Research Portfolio Overview",
+    icon: Users,
+    restricted: false
+  }, {
+    name: "Asset Protection Guidelines",
+    icon: Shield,
+    restricted: false
+  }];
+  const portfolioMetrics = [{
+    label: "Current NAV",
+    value: "$86.00",
+    change: "+12.5%",
+    positive: true
+  }, {
+    label: "Total Investment",
+    value: "$25M",
+    change: "Across 25 Cohorts",
+    positive: true
+  }, {
+    label: "Asset Recovery Rate",
+    value: "96%",
+    change: "Conservative Scenario",
+    positive: true
+  }, {
+    label: "Distribution Schedule",
+    value: "Quarterly",
+    change: "Next: Q1 2025",
+    positive: true
+  }];
+  return <div className="min-h-screen bg-background">
       <Navigation />
       
       {/* Header with proper spacing from fixed navigation */}
-      <header className="border-b border-border bg-background/95 backdrop-blur-md mt-20 relative z-40">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-glow rounded-lg flex items-center justify-center">
-                  <div className="w-2 h-2 bg-background rounded-full"></div>
-                </div>
-                <div>
-                  <h1 className="text-xl font-bold text-foreground">VaultForge</h1>
-                  <p className="text-xs text-muted-foreground">Investor Portal</p>
-                </div>
-              </div>
-              
-              {/* Entity Switcher */}
-              <div className="flex space-x-2 ml-8">
-                {(['skyline_operator', 'skyline_prime'] as Array<'skyline_operator' | 'skyline_prime'>).map((entity) => (
-                  <Button
-                    key={entity}
-                    variant={selectedEntity === entity ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setSelectedEntity(entity)}
-                    className={selectedEntity === entity ? 'bg-primary text-primary-foreground hover:bg-primary/90' : 'text-muted-foreground hover:text-primary border-border'}
-                  >
-                    {entity === 'skyline_operator' ? 'Operations' : 'Prime LP'}
-                  </Button>
-                ))}
-              </div>
-            </div>
-
-            <div className="flex items-center space-x-4">
-              <Badge variant="secondary" className="capitalize">
-                {userRole.replace('_', ' ')}
-              </Badge>
-              {isAccredited && (
-                <Badge variant="default" className="bg-green-500 text-white">
-                  <Shield className="h-3 w-3 mr-1" />
-                  Verified
-                </Badge>
-              )}
-              <Button variant="ghost" size="icon">
-                <Bell className="h-4 w-4" />
-              </Button>
-              <Avatar>
-                <AvatarFallback className="bg-primary text-primary-foreground">{user?.email?.[0]?.toUpperCase()}</AvatarFallback>
-              </Avatar>
-              <Button variant="ghost" size="icon" onClick={signOut}>
-                <LogOut className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
+      
 
       <div className="container mx-auto px-4 py-8">
         {/* Dashboard Overview */}
@@ -159,15 +125,11 @@ const InvestorPortal = () => {
                 {selectedEntity === 'skyline_operator' ? 'SkyOpHQ Dashboard' : 'Prime LP Dashboard'}
               </h2>
               <p className="text-muted-foreground">
-                {selectedEntity === 'skyline_operator' 
-                  ? 'Operations center and investment management' 
-                  : 'Limited partnership overview and performance'
-                }
+                {selectedEntity === 'skyline_operator' ? 'Operations center and investment management' : 'Limited partnership overview and performance'}
               </p>
             </div>
             
-            {!isAccredited && (
-              <Dialog open={showVerification} onOpenChange={setShowVerification}>
+            {!isAccredited && <Dialog open={showVerification} onOpenChange={setShowVerification}>
                 <DialogTrigger asChild>
                   <Button variant="outline" className="border-orange-300 text-orange-600 hover:bg-orange-50">
                     <Shield className="mr-2 h-4 w-4" />
@@ -201,31 +163,22 @@ const InvestorPortal = () => {
                     </div>
                     
                     <div className="flex flex-col gap-3">
-                      <Button 
-                        variant="default" 
-                        onClick={() => {
-                          setIsAccredited(true);
-                          setShowVerification(false);
-                        }}
-                        className="w-full"
-                      >
+                      <Button variant="default" onClick={() => {
+                    setIsAccredited(true);
+                    setShowVerification(false);
+                  }} className="w-full">
                         Yes, I am an accredited investor
                       </Button>
-                      <Button 
-                        variant="outline" 
-                        onClick={() => {
-                          setIsAccredited(false);
-                          setShowVerification(false);
-                        }}
-                        className="w-full"
-                      >
+                      <Button variant="outline" onClick={() => {
+                    setIsAccredited(false);
+                    setShowVerification(false);
+                  }} className="w-full">
                         No, I am not an accredited investor
                       </Button>
                     </div>
                   </div>
                 </DialogContent>
-              </Dialog>
-            )}
+              </Dialog>}
           </div>
           
           {/* Key Stats */}
@@ -285,18 +238,15 @@ const InvestorPortal = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                {recentAlerts.map((alert, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 border border-border rounded-lg bg-background/50">
+                {recentAlerts.map((alert, index) => <div key={index} className="flex items-center justify-between p-3 border border-border rounded-lg bg-background/50">
                     <div className="flex items-center space-x-3">
-                      <Badge variant={alert.type === 'urgent' ? 'destructive' : alert.type === 'success' ? 'default' : 'secondary'} 
-                             className={alert.type === 'info' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-300' : ''}>
+                      <Badge variant={alert.type === 'urgent' ? 'destructive' : alert.type === 'success' ? 'default' : 'secondary'} className={alert.type === 'info' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-300' : ''}>
                         {alert.type}
                       </Badge>
                       <span className="text-foreground">{alert.message}</span>
                     </div>
                     <span className="text-sm text-muted-foreground">{alert.time}</span>
-                  </div>
-                ))}
+                  </div>)}
               </div>
             </CardContent>
           </Card>
@@ -312,8 +262,7 @@ const InvestorPortal = () => {
           </TabsList>
 
           <TabsContent value="overview" className="space-y-6">
-            {selectedEntity === 'skyline_operator' && (
-              <Card className="bg-card/50 backdrop-blur-sm border-border">
+            {selectedEntity === 'skyline_operator' && <Card className="bg-card/50 backdrop-blur-sm border-border">
                 <CardHeader>
                   <CardTitle className="text-foreground">SkyOpHQ - Operations Center</CardTitle>
                 </CardHeader>
@@ -367,11 +316,9 @@ const InvestorPortal = () => {
                     </Card>
                   </div>
                 </CardContent>
-              </Card>
-            )}
+              </Card>}
 
-            {selectedEntity === 'skyline_prime' && (
-              <Card className="bg-card/50 backdrop-blur-sm border-border">
+            {selectedEntity === 'skyline_prime' && <Card className="bg-card/50 backdrop-blur-sm border-border">
                 <CardHeader>
                   <CardTitle className="text-foreground">Skyline Prime Limited Partnership</CardTitle>
                 </CardHeader>
@@ -421,14 +368,12 @@ const InvestorPortal = () => {
                     </Card>
                   </div>
                 </CardContent>
-              </Card>
-            )}
+              </Card>}
           </TabsContent>
 
           <TabsContent value="portfolio" className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-              {portfolioMetrics.map((metric, index) => (
-                <Card key={metric.label} className="bg-card/50 backdrop-blur-sm border-border p-6">
+              {portfolioMetrics.map((metric, index) => <Card key={metric.label} className="bg-card/50 backdrop-blur-sm border-border p-6">
                   <div className="text-center">
                     <div className="text-2xl font-bold text-primary mb-2">{metric.value}</div>
                     <div className="text-sm text-muted-foreground mb-2">{metric.label}</div>
@@ -437,8 +382,7 @@ const InvestorPortal = () => {
                       {metric.change}
                     </div>
                   </div>
-                </Card>
-              ))}
+                </Card>)}
             </div>
 
             <Card className="bg-card/50 backdrop-blur-sm border-border">
@@ -503,16 +447,12 @@ const InvestorPortal = () => {
                     </div>
                   </div>
                   
-                  {isAccredited === true ? (
-                    <Button variant="default" className="w-full">
+                  {isAccredited === true ? <Button variant="default" className="w-full">
                       View Investment Details
-                    </Button>
-                  ) : (
-                    <Button variant="outline" disabled className="w-full">
+                    </Button> : <Button variant="outline" disabled className="w-full">
                       <Shield className="mr-2 h-4 w-4" />
                       Verification Required
-                    </Button>
-                  )}
+                    </Button>}
                 </div>
               </Card>
               
@@ -584,10 +524,7 @@ const InvestorPortal = () => {
                     <label className="block text-sm font-medium text-foreground mb-2">
                       Message *
                     </label>
-                    <Textarea 
-                      className="bg-background/50 border-border min-h-[120px]" 
-                      placeholder="Tell us about your investment interests and experience..."
-                    />
+                    <Textarea className="bg-background/50 border-border min-h-[120px]" placeholder="Tell us about your investment interests and experience..." />
                   </div>
                   
                   <div className="text-center">
@@ -606,8 +543,6 @@ const InvestorPortal = () => {
       </div>
 
       
-    </div>
-  );
+    </div>;
 };
-
 export default InvestorPortal;
