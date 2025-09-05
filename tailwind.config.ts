@@ -53,10 +53,14 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				neuro: 'hsl(var(--neuro-green))',
-				orbital: 'hsl(var(--orbital-orange))',
-				stellar: 'hsl(var(--stellar-purple))',
-				velocity: 'hsl(var(--velocity-red))',
+				neuro: 'hsl(140 60% 55%)',
+				orbital: 'hsl(25 85% 60%)',
+				stellar: 'hsl(260 75% 65%)',
+				velocity: 'hsl(350 80% 60%)',
+				navy: 'hsl(var(--navy))',
+				gold: 'hsl(var(--gold))',
+				charcoal: 'hsl(var(--charcoal))',
+				cream: 'hsl(var(--cream))',
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
