@@ -18,7 +18,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<SkylineAdsLanding />} />
+          <Route path="/" element={<SkylinePortal />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/unified-portal" element={<UnifiedPortal />} />
           <Route path="/skyline-portal" element={<SkylinePortal />} />
