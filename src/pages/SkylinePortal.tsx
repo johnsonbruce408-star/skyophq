@@ -3,58 +3,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Shield, TrendingUp, Users, FileText, Clock, Mail, MapPin, ExternalLink, ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { Shield, TrendingUp, Users, FileText, Clock, Mail, MapPin, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { SimpleNavigation } from "@/components/SimpleNavigation";
 
-const SkylineNavigation = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useState(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  });
-
-  return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-background/95 backdrop-blur-md border-b border-border' : 'bg-transparent'
-    }`}>
-      <div className="max-w-7xl mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary-glow rounded-lg flex items-center justify-center">
-              <div className="w-3 h-3 bg-background rounded-sm" />
-            </div>
-            <span className="text-xl font-bold text-foreground">Skyline Operator Group</span>
-          </div>
-          
-          <div className="hidden lg:flex items-center gap-8">
-            <a href="#investment" className="text-muted-foreground hover:text-primary transition-colors">Investment Opportunities</a>
-            <a href="#performance" className="text-muted-foreground hover:text-primary transition-colors">Performance</a>
-            <a href="#about" className="text-muted-foreground hover:text-primary transition-colors">About Partnership</a>
-            <a href="#accreditation" className="text-muted-foreground hover:text-primary transition-colors">Accreditation</a>
-            <a href="/social-hub" className="text-muted-foreground hover:text-primary transition-colors">Social Media</a>
-            <a href="#contact" className="text-muted-foreground hover:text-primary transition-colors">Contact</a>
-          </div>
-          
-          <Button variant="hero" size="sm" asChild>
-            <Link to="/unified-portal">Access Portal</Link>
-          </Button>
-        </div>
-      </div>
-    </nav>
-  );
-};
 
 const SkylinePortal = () => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100 dark:from-slate-900 dark:to-gray-800">
-      <SkylineNavigation />
+      <SimpleNavigation />
       
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
@@ -101,15 +58,6 @@ const SkylinePortal = () => {
         <div className="absolute bottom-32 left-1/3 w-1 h-1 bg-neuro rounded-full animate-float opacity-80" style={{ animationDelay: '4s' }} />
       </section>
 
-      {/* Collapsible Dropdown for Rest of Content */}
-      <Collapsible open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
-        <div className="flex justify-center py-8 bg-gradient-to-br from-slate-50 to-gray-100 dark:from-slate-900 dark:to-gray-800">
-          <CollapsibleTrigger className="flex items-center gap-2 text-lg font-medium text-primary hover:text-primary/80 transition-colors">
-            Explore Investment Details
-            <ChevronDown className={`h-5 w-5 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} />
-          </CollapsibleTrigger>
-        </div>
-        <CollapsibleContent>
 
       {/* Investment Opportunity Section */}
       <section className="py-20 px-4 relative">
@@ -373,8 +321,6 @@ const SkylinePortal = () => {
           </div>
         </div>
       </footer>
-        </CollapsibleContent>
-      </Collapsible>
     </div>
   );
 };

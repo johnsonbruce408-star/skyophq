@@ -6,6 +6,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { ChevronLeft, ChevronRight, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from "recharts";
+import { SimpleNavigation } from "@/components/SimpleNavigation";
 
 const COLORS = ['hsl(var(--primary))', 'hsl(var(--secondary))', 'hsl(var(--accent))', 'hsl(var(--muted))'];
 
@@ -485,16 +486,17 @@ const InvestorDeck = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
-      <div className="container mx-auto px-4 py-8">
+      <SimpleNavigation />
+      <div className="container mx-auto px-4 py-20">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <Button
             variant="outline"
-            onClick={() => navigate("/skyline-portal")}
+            onClick={() => navigate("/unified-portal")}
             className="flex items-center gap-2"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to Portal
+            Back to Onboarding
           </Button>
           <Badge variant="outline">
             Slide {currentSlide + 1} of {slides.length}
@@ -502,7 +504,7 @@ const InvestorDeck = () => {
         </div>
 
         {/* Slide Content */}
-        <Card className="min-h-[600px]">
+        <Card className="min-h-[500px]">
           <CardHeader className="text-center border-b">
             <div className="flex justify-between items-center">
               <Button
@@ -526,7 +528,7 @@ const InvestorDeck = () => {
               </Button>
             </div>
           </CardHeader>
-          <CardContent className="p-8">
+          <CardContent className="p-6">
             {slides[currentSlide].content}
           </CardContent>
         </Card>

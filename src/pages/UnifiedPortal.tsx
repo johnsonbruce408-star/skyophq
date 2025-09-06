@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Bell, LogOut, Calendar, CheckCircle, Upload, FileText, DollarSign, CreditCard, Building } from "lucide-react";
-import { Navigation } from "@/components/Navigation";
+import { SimpleNavigation } from "@/components/SimpleNavigation";
 import { DocumentUpload } from "@/components/DocumentUpload";
 
 interface OnboardingStep {
@@ -80,7 +80,7 @@ export default function UnifiedPortal() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Navigation />
+      <SimpleNavigation />
       
       {/* Header with proper spacing from fixed navigation */}
       <header className="border-b border-border bg-background mt-20 relative z-40">
