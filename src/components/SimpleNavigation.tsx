@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Facebook } from "lucide-react";
 
 export const SimpleNavigation = () => {
   const location = useLocation();
@@ -33,11 +34,22 @@ export const SimpleNavigation = () => {
                 {item.label}
               </Link>
             ))}
+            <a 
+              href="https://www.facebook.com/profile.php?id=61579775342051" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-primary transition-colors"
+              aria-label="Visit our Facebook page"
+            >
+              <Facebook size={18} />
+            </a>
           </div>
           
-          <Button variant="outline" size="sm" asChild>
-            <Link to="/auth">Login</Link>
-          </Button>
+          <div className="flex items-center gap-3">
+            <Button variant="outline" size="sm" asChild>
+              <Link to="/auth">Login</Link>
+            </Button>
+          </div>
         </div>
       </div>
     </nav>
