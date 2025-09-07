@@ -158,9 +158,9 @@ const SkylinePortal = () => {
                 <CardTitle className="text-primary animate-pulse-glow">For Accredited Investors Only</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
-                <p className="text-muted-foreground leading-relaxed">
-                  This investment opportunity is available exclusively to accredited investors as defined by SEC regulations. Minimum investment $50,000.
-                </p>
+                   <p className="text-muted-foreground leading-relaxed">
+                     This investment opportunity is available exclusively to accredited investors as defined by SEC regulations. Minimum investment $100,000.
+                   </p>
                 <div>
                   <h5 className="font-semibold mb-4 text-foreground">Investment Documents Available</h5>
                   <ul className="space-y-2 text-muted-foreground text-left">
@@ -251,10 +251,10 @@ const SkylinePortal = () => {
                   <CardTitle className="text-neuro">Investment Minimums</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3 text-muted-foreground">
-                  <p className="flex items-center gap-2">
-                    <div className="w-1 h-1 bg-neuro rounded-full" />
-                    Minimum investment: $250,000
-                  </p>
+                   <p className="flex items-center gap-2">
+                     <div className="w-1 h-1 bg-neuro rounded-full" />
+                     Minimum investment: $100,000
+                   </p>
                   <p className="flex items-center gap-2">
                     <div className="w-1 h-1 bg-neuro rounded-full" />
                     Sophisticated investor verification required
@@ -300,9 +300,9 @@ const SkylinePortal = () => {
               <CardTitle className="text-primary">Important Disclaimer</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-sm text-muted-foreground">
-                <strong className="text-foreground">Skyline Prime LP | Wyoming | Regulation D 506(c) | For Accredited Investors Only</strong>
-              </p>
+               <p className="text-sm text-muted-foreground">
+                 <strong className="text-foreground">Skyline Prime Limited Partnership | Delaware LP | Regulation D 506(c) | Fund Manager: Bruce L. Johnson Jr.</strong>
+               </p>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 This is not an offer to sell securities. Any investment offer will be made only through a Private Placement Memorandum (PPM) and related documents. Securities are offered only to accredited investors as defined by SEC regulations. Past performance does not guarantee future results.
               </p>

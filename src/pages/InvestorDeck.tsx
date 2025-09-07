@@ -46,7 +46,10 @@ const InvestorDeck = () => {
               Skyline Prime Limited Partnership
             </h1>
             <p className="text-2xl text-muted-foreground">
-              "Cash-flowing businesses + late-stage growth opportunities"
+              "8% Preferred Return + 80/20 Split After Hurdle"
+            </p>
+            <p className="text-lg text-muted-foreground mt-4">
+              GP: Skyline Operator Group, LLC | Fund Manager: Bruce L. Johnson Jr.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
@@ -91,8 +94,9 @@ const InvestorDeck = () => {
                     <li><strong>Fund Size:</strong> $5M initial close</li>
                     <li><strong>Term:</strong> 10 years</li>
                     <li><strong>Investment Focus:</strong> Multi-business acquisitions + late-stage/pre-IPO positions</li>
-                    <li><strong>Strategy:</strong> Steady cash flows + high upside equity</li>
-                    <li><strong>Target LPs:</strong> Accredited investors</li>
+                    <li><strong>GP:</strong> Skyline Operator Group, LLC</li>
+                    <li><strong>Fund Manager:</strong> Bruce L. Johnson Jr.</li>
+                    <li><strong>Min Investment:</strong> $100,000</li>
                   </ul>
                 </CardContent>
               </Card>
@@ -250,10 +254,10 @@ const InvestorDeck = () => {
               <CardContent>
                 <ul className="space-y-2">
                   <li><strong>Management Fee:</strong> 2% annual → $100k/year</li>
-                  <li><strong>GP Draw:</strong> $65k/year</li>
-                  <li><strong>PM:</strong> $15k/year</li>
-                  <li><strong>EA:</strong> $10k/year</li>
+                  <li><strong>GP Draw:</strong> From management fee</li>
+                  <li><strong>PM/BA:</strong> $15k/year</li>
                   <li><strong>Accountant:</strong> $50k/year</li>
+                  <li><strong>EA:</strong> Excluded (GP fee)</li>
                   <li><strong>Carry:</strong> 20% above hurdle</li>
                 </ul>
               </CardContent>
@@ -411,18 +415,18 @@ const InvestorDeck = () => {
               </div>
               <div className="text-2xl text-center text-muted-foreground">↓</div>
               <div className="bg-secondary/20 p-4 rounded-lg text-center">
-                <h3 className="font-bold text-lg">2. Preferred Return</h3>
-                <p>LPs receive preferred return on invested capital</p>
+                <h3 className="font-bold text-lg">2. 8% Preferred Return</h3>
+                <p>LPs receive 8% per annum cumulative, non-compounded</p>
               </div>
               <div className="text-2xl text-center text-muted-foreground">↓</div>
               <div className="bg-accent/20 p-4 rounded-lg text-center">
-                <h3 className="font-bold text-lg">3. GP Carry (20%)</h3>
-                <p>GP receives 20% of profits above hurdle</p>
+                <h3 className="font-bold text-lg">3. Catch-Up & 80/20 Split</h3>
+                <p>GP catch-up, then 80% LP / 20% GP on remaining profits</p>
               </div>
               <div className="text-2xl text-center text-muted-foreground">↓</div>
               <div className="bg-muted/20 p-4 rounded-lg text-center">
-                <h3 className="font-bold text-lg">4. Remaining Profits</h3>
-                <p>Remaining 80% distributed to LPs</p>
+                <h3 className="font-bold text-lg">4. Investment Requirements</h3>
+                <p>Minimum Investment: $100,000 per investor</p>
               </div>
             </div>
           </div>

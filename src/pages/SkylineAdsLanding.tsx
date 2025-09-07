@@ -72,7 +72,7 @@ const SkylineAdsLanding = () => {
                   <span className="text-foreground">Made Simple</span>
                 </h1>
                 <p className="text-xl text-muted-foreground leading-relaxed">
-                  Join sophisticated investors in our <strong>$5M limited partnership</strong> targeting cash-flowing businesses and pre-IPO opportunities with defined exit strategies.
+                  Join sophisticated investors in our <strong>$5M limited partnership</strong> targeting 8% preferred return with proven distribution waterfall structure.
                 </p>
               </div>
 
@@ -167,10 +167,10 @@ const SkylineAdsLanding = () => {
                         required
                       >
                         <option value="">Select investment range</option>
+                        <option value="100k-250k">$100K - $250K</option>
                         <option value="250k-500k">$250K - $500K</option>
                         <option value="500k-1m">$500K - $1M</option>
-                        <option value="1m-2m">$1M - $2M</option>
-                        <option value="2m+">$2M+</option>
+                        <option value="1m+">$1M+</option>
                       </select>
                     </div>
                     <div>
@@ -334,7 +334,7 @@ const SkylineAdsLanding = () => {
                   <CardTitle className="text-accent text-center">Investment Requirements</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3 text-center">
-                  <p className="text-lg font-semibold text-foreground">Minimum Investment: $250,000</p>
+                  <p className="text-lg font-semibold text-foreground">Minimum Investment: $100,000</p>
                   <p className="text-muted-foreground">Accredited investor verification required</p>
                   <p className="text-sm text-muted-foreground">Securities offered through Regulation D 506(c)</p>
                 </CardContent>
