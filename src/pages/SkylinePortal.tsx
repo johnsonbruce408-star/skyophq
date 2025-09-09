@@ -70,9 +70,10 @@ const SkylinePortal = () => {
             <h3 className="text-xl md:text-2xl text-primary mb-8 animate-pulse-glow">
               Exclusive Direct Investment Opportunities
             </h3>
-            <p className="text-lg text-muted-foreground max-w-4xl mx-auto mb-12 leading-relaxed">
-              Available only to verified accredited investors, our Wyoming-based limited partnership offers access to meticulously structured private business acquisitions.
-            </p>
+            <blockquote className="text-lg text-muted-foreground max-w-4xl mx-auto mb-6 leading-relaxed italic border-l-4 border-primary pl-4">
+              "We got some great brokers lined up and a small Softr-enabled office scalable to 50 million in invested capital—immediate plans to soft-hire a Project Manager converting into a full-time Portfolio Manager after capital deployment."
+            </blockquote>
+            <p className="text-sm text-muted-foreground mb-12">— Bruce L. Johnson Jr., Fund Manager</p>
             <Button variant="hero" size="lg" className="mb-8">
               <Shield className="w-5 h-5 mr-2" />
               Verify Accreditation to View Details

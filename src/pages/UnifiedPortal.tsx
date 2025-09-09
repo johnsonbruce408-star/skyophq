@@ -4,9 +4,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Bell, LogOut, Calendar, CheckCircle, Upload, FileText, DollarSign, CreditCard, Building } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Bell, LogOut, Calendar, CheckCircle, Upload, FileText, DollarSign, CreditCard, Building, BarChart3, TrendingUp, Users, Eye } from "lucide-react";
 import { SimpleNavigation } from "@/components/SimpleNavigation";
-import { DocumentUpload } from "@/components/DocumentUpload";
 
 interface OnboardingStep {
   id: string;
@@ -19,17 +21,27 @@ interface OnboardingStep {
 
 export default function UnifiedPortal() {
   const { user, signOut } = useAuth();
-  const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
-  const [selectedDocumentType, setSelectedDocumentType] = useState<string>("");
+  const [loginDialogOpen, setLoginDialogOpen] = useState(false);
+  const [loginForm, setLoginForm] = useState({ email: "", password: "" });
 
-  const onboardingSteps: OnboardingStep[] = [
+  const dashboardItems = [
     {
       id: 'accreditation',
-      title: 'Accreditation Verification',
-      description: 'Upload documents to verify your accredited investor status',
+      title: 'Get Accredited',
+      description: 'Complete accreditation verification with GetVerified.com',
       completed: false,
       icon: CheckCircle,
-      action: 'Upload Verification'
+      action: 'Get Verified',
+      type: 'external'
+    },
+    {
+      id: 'aml-kyc',
+      title: 'AML/KYC Verification',
+      description: 'Complete anti-money laundering and know-your-customer checks',
+      completed: false,
+      icon: Building,
+      action: 'Complete AML/KYC',
+      type: 'external'
     },
     {
       id: 'ppm',
@@ -37,7 +49,8 @@ export default function UnifiedPortal() {
       description: 'Review and acknowledge the PPM',
       completed: false,
       icon: FileText,
-      action: 'Review PPM'
+      action: 'Review PPM',
+      type: 'internal'
     },
     {
       id: 'subscription',
@@ -45,7 +58,8 @@ export default function UnifiedPortal() {
       description: 'Complete and upload signed subscription agreement',
       completed: false,
       icon: FileText,
-      action: 'Upload Agreement'
+      action: 'Upload Agreement',
+      type: 'internal'
     },
     {
       id: 'lpa',
@@ -53,7 +67,8 @@ export default function UnifiedPortal() {
       description: 'Sign the LPA documentation',
       completed: false,
       icon: Building,
-      action: 'Sign LPA'
+      action: 'Sign LPA',
+      type: 'internal'
     },
     {
       id: 'ach',
@@ -61,21 +76,32 @@ export default function UnifiedPortal() {
       description: 'Set up bank transfer for funding',
       completed: false,
       icon: CreditCard,
-      action: 'Setup ACH'
-    },
-    {
-      id: 'bluesky',
-      title: 'SEC Bluesky Filing',
-      description: 'Complete state securities registration',
-      completed: false,
-      icon: DollarSign,
-      action: 'File Documents'
+      action: 'Setup ACH',
+      type: 'internal'
     }
   ];
 
-  const handleDocumentUpload = (documentType: string) => {
-    setSelectedDocumentType(documentType);
-    setUploadDialogOpen(true);
+  const dashboardStats = [
+    { title: 'Portfolio Value', value: '$0', change: '+0%', icon: BarChart3 },
+    { title: 'Total Returns', value: '$0', change: '+0%', icon: TrendingUp },
+    { title: 'Active Investments', value: '0', change: '0', icon: Building },
+    { title: 'Documents', value: '0/6', change: 'Pending', icon: FileText }
+  ];
+
+  const handleItemClick = (item: any) => {
+    if (item.type === 'external') {
+      // Redirect to getverified.com for accreditation and AML/KYC
+      window.open('https://getverified.com', '_blank');
+    } else {
+      // Show login dialog for internal documents
+      setLoginDialogOpen(true);
+    }
+  };
+
+  const handleLoginSubmit = () => {
+    // Redirect to investor documents dashboard (replace with your actual lovable project URL)
+    window.open('https://your-investor-dashboard.lovable.app', '_blank');
+    setLoginDialogOpen(false);
   };
 
   return (
@@ -91,10 +117,10 @@ export default function UnifiedPortal() {
                 <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
                   <div className="w-2 h-2 bg-primary-foreground rounded-full"></div>
                 </div>
-                <div>
-                  <h1 className="text-xl font-bold text-foreground">Investor Onboarding</h1>
-                  <p className="text-xs text-muted-foreground">Complete your enrollment process</p>
-                </div>
+              <div>
+                <h1 className="text-xl font-bold text-foreground">Investor Dashboard Preview</h1>
+                <p className="text-xs text-muted-foreground">Your investment portal and onboarding center</p>
+              </div>
               </div>
             </div>
 
@@ -117,67 +143,84 @@ export default function UnifiedPortal() {
       </header>
 
       <div className="container mx-auto px-4 py-8">
-        {/* Welcome Section */}
+        {/* GP Quote Section */}
         <div className="mb-8">
           <Card className="bg-gradient-to-r from-primary/10 to-primary/5 border-primary/20">
             <CardContent className="p-8">
-              <h2 className="text-3xl font-bold text-foreground mb-4">Welcome to SkyOpHQ</h2>
-              <p className="text-lg text-muted-foreground mb-6">
-                Complete the following steps to finalize your investor onboarding and gain access to the platform.
-              </p>
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 bg-primary rounded-full"></div>
-                  <span className="text-sm text-muted-foreground">
-                    {onboardingSteps.filter(step => step.completed).length} of {onboardingSteps.length} steps completed
-                  </span>
-                </div>
-              </div>
+              <h2 className="text-3xl font-bold text-foreground mb-4">Welcome to Skyline Prime LP</h2>
+              <blockquote className="text-lg text-muted-foreground mb-6 italic border-l-4 border-primary pl-4">
+                "We got some great brokers lined up and a small Softr-enabled office scalable to 50 million in invested capital—immediate plans to soft-hire a Project Manager converting into a full-time Portfolio Manager after capital deployment."
+              </blockquote>
+              <p className="text-sm text-muted-foreground">— Bruce L. Johnson Jr., Fund Manager</p>
             </CardContent>
           </Card>
         </div>
 
-        {/* Onboarding Steps */}
+        {/* Dashboard Stats Preview */}
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold text-foreground mb-4">Portfolio Overview</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {dashboardStats.map((stat) => {
+              const IconComponent = stat.icon;
+              return (
+                <Card key={stat.title} className="p-6 hover:shadow-md transition-all duration-200">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-muted-foreground">{stat.title}</p>
+                      <p className="text-2xl font-bold text-foreground">{stat.value}</p>
+                      <p className="text-sm text-primary">{stat.change}</p>
+                    </div>
+                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                      <IconComponent className="w-6 h-6 text-primary" />
+                    </div>
+                  </div>
+                </Card>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Onboarding & Document Access */}
         <Card className="mb-8">
           <CardHeader>
             <CardTitle className="flex items-center text-foreground">
-              <Calendar className="h-5 w-5 mr-2 text-primary" />
-              Required Onboarding Steps
+              <Eye className="h-5 w-5 mr-2 text-primary" />
+              Document Access & Onboarding
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {onboardingSteps.map((step, index) => {
-                const IconComponent = step.icon;
+              {dashboardItems.map((item, index) => {
+                const IconComponent = item.icon;
                 return (
-                  <Card key={step.id} className={`p-6 transition-all duration-200 hover:shadow-md ${
-                    step.completed 
+                  <Card key={item.id} className={`p-6 transition-all duration-200 hover:shadow-md ${
+                    item.completed 
                       ? 'bg-primary/5 border-primary/30' 
                       : 'bg-card border-border hover:border-primary/30'
                   }`}>
                     <div className="flex items-center gap-3 mb-3">
                       <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
-                        step.completed 
+                        item.completed 
                           ? 'bg-primary text-primary-foreground' 
                           : 'bg-muted text-muted-foreground'
                       }`}>
-                        {step.completed ? <IconComponent className="w-4 h-4" /> : index + 1}
+                        {item.completed ? <IconComponent className="w-4 h-4" /> : index + 1}
                       </div>
                       <h3 className={`font-semibold ${
-                        step.completed ? 'text-primary' : 'text-foreground'
+                        item.completed ? 'text-primary' : 'text-foreground'
                       }`}>
-                        {step.title}
+                        {item.title}
                       </h3>
                     </div>
-                    <p className="text-sm text-muted-foreground mb-4">{step.description}</p>
+                    <p className="text-sm text-muted-foreground mb-4">{item.description}</p>
                     <Button 
                       size="sm" 
                       className="w-full" 
-                      variant={step.completed ? "outline" : "default"}
-                      onClick={() => handleDocumentUpload(step.id)}
-                      disabled={step.completed}
+                      variant={item.completed ? "outline" : "default"}
+                      onClick={() => handleItemClick(item)}
+                      disabled={item.completed}
                     >
-                      {step.completed ? 'Completed' : step.action}
+                      {item.completed ? 'Completed' : item.action}
                     </Button>
                   </Card>
                 );
@@ -197,36 +240,66 @@ export default function UnifiedPortal() {
               <div className="space-y-2 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <span>SEC Compliant - Regulation D</span>
+                  <span>SEC Compliant - Regulation D, Rule 506(c)</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <span>Wyoming LLC Structure</span>
+                  <span>Delaware Limited Partnership</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <span>Accredited Investors Only</span>
+                  <span>$100,000 Minimum Investment</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  <span>8% Preferred Return + 80/20 Split</span>
                 </div>
               </div>
             </div>
             
             <div className="p-4 bg-muted/50 border border-border rounded-lg">
-              <h3 className="font-semibold text-foreground mb-2">Next Steps</h3>
+              <h3 className="font-semibold text-foreground mb-2">Operational Excellence</h3>
               <p className="text-sm text-muted-foreground">
-                Once all onboarding steps are complete, you'll receive access to the full investor portal 
-                with performance reporting, document library, and communication tools.
+                With professional brokers, scalable infrastructure, and dedicated project management converting to full-time portfolio management, 
+                we're positioned for growth while maintaining operational efficiency and compliance.
               </p>
             </div>
           </CardContent>
         </Card>
 
-        {/* Document Upload Dialog */}
-        <DocumentUpload 
-          onUploadSuccess={() => {
-            setUploadDialogOpen(false);
-            // Here you could update the completion status of the step
-          }}
-        />
+        {/* Login Dialog */}
+        <Dialog open={loginDialogOpen} onOpenChange={setLoginDialogOpen}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Access Investor Documents</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={loginForm.email}
+                  onChange={(e) => setLoginForm({ ...loginForm, email: e.target.value })}
+                  placeholder="Enter your email"
+                />
+              </div>
+              <div>
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  value={loginForm.password}
+                  onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
+                  placeholder="Enter your password"
+                />
+              </div>
+              <Button onClick={handleLoginSubmit} className="w-full">
+                Access Documents
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
