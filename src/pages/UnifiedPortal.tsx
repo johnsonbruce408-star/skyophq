@@ -97,17 +97,36 @@ export default function UnifiedPortal() {
 
   const handleItemClick = (item: any) => {
     if (item.type === 'upload') {
-      // Handle accreditation upload
+      // Handle accreditation upload - no login required
       if (!accreditationVerified) {
-        // Simulate file upload - in production, this would be a proper file upload
         const confirmed = window.confirm('Upload your accreditation verification document?');
         if (confirmed) {
-          setAccreditationVerified(true);
-          setCurrentStep(1);
-          alert('Thank you for submitting your accreditation verification. Once verified, you will be granted secure access to review the offering documents.');
+          // Simulate file upload and email sending
+          handleAccreditationSubmission();
         }
       }
-    } else if (item.type === 'document' && item.enabled) {
+    } else {
+      // All other actions require login
+      setLoginDialogOpen(true);
+    }
+  };
+
+  const handleAccreditationSubmission = async () => {
+    try {
+      // In a real implementation, this would upload the file and send email
+      // For now, we'll simulate the process
+      setAccreditationVerified(true);
+      alert('Thank you for submitting your accreditation verification. We have sent your documents to our team for review. Once verified, you will be granted secure access to review the offering documents.');
+      
+      // Simulate sending email to admin
+      console.log('Accreditation documents sent to admin for review');
+    } catch (error) {
+      alert('Error submitting documents. Please try again.');
+    }
+  };
+
+  const handleDocumentAccess = (item: any) => {
+    if (item.enabled) {
       // Open document URL and mark step as completed
       window.open(item.url, '_blank');
       
@@ -141,9 +160,14 @@ export default function UnifiedPortal() {
   };
 
   const handleLoginSubmit = () => {
-    // Redirect to investor documents dashboard (replace with your actual lovable project URL)
-    window.open('https://your-investor-dashboard.lovable.app', '_blank');
+    // After login, allow access to documents
     setLoginDialogOpen(false);
+    
+    // Show the last clicked item for document access
+    const lastClickedItem = dashboardItems.find(item => item.type === 'document' && item.enabled);
+    if (lastClickedItem) {
+      handleDocumentAccess(lastClickedItem);
+    }
   };
 
   return (
@@ -325,9 +349,12 @@ export default function UnifiedPortal() {
         <Dialog open={loginDialogOpen} onOpenChange={setLoginDialogOpen}>
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
-              <DialogTitle>Access Investor Documents</DialogTitle>
+              <DialogTitle>Login Required</DialogTitle>
             </DialogHeader>
             <div className="space-y-4">
+              <p className="text-sm text-muted-foreground">
+                Please log in to access investor documents and continue the onboarding process.
+              </p>
               <div>
                 <Label htmlFor="email">Email</Label>
                 <Input
@@ -349,7 +376,7 @@ export default function UnifiedPortal() {
                 />
               </div>
               <Button onClick={handleLoginSubmit} className="w-full">
-                Access Documents
+                Login & Continue
               </Button>
             </div>
           </DialogContent>
