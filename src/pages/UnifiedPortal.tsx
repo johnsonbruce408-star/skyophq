@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Bell, LogOut, Calendar, CheckCircle, Upload, FileText, DollarSign, CreditCard, Building, BarChart3, TrendingUp, Users, Eye } from "lucide-react";
 import { SimpleNavigation } from "@/components/SimpleNavigation";
+import { DocumentUpload } from "@/components/DocumentUpload";
 
 interface OnboardingStep {
   id: string;
@@ -23,6 +24,7 @@ export default function UnifiedPortal() {
   const { user, signOut } = useAuth();
   const [loginDialogOpen, setLoginDialogOpen] = useState(false);
   const [loginForm, setLoginForm] = useState({ email: "", password: "" });
+  const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
 
   const [accreditationVerified, setAccreditationVerified] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -34,7 +36,7 @@ export default function UnifiedPortal() {
       description: 'Upload your accreditation verification to access offering documents',
       completed: accreditationVerified,
       icon: Upload,
-      action: accreditationVerified ? 'Verified' : 'Upload Accreditation Verification to Review PPM',
+      action: accreditationVerified ? 'Verified' : 'Upload Accreditation Verification',
       type: 'upload',
       step: 0
     },
@@ -53,10 +55,10 @@ export default function UnifiedPortal() {
     {
       id: 'lpa',
       title: 'Limited Partnership Agreement',
-      description: 'Review and sign the LPA documentation',
+      description: 'Request and sign the LPA documentation',
       completed: currentStep > 2,
       icon: Building,
-      action: 'Review & Sign LPA',
+      action: 'Request & Sign LPA',
       type: 'document',
       step: 2,
       url: 'https://drive.google.com/file/d/1u5YV0kGhHdu5soi6yfrPlEhtKalSwaAs/view?usp=drive_link',
@@ -68,7 +70,7 @@ export default function UnifiedPortal() {
       description: 'Complete and sign the subscription agreement',
       completed: currentStep > 3,
       icon: FileText,
-      action: 'Review & Sign Subscription Agreement',
+      action: 'Request & Sign Subscription Agreement',
       type: 'document',
       step: 3,
       url: 'https://drive.google.com/file/d/1OhxBIJYWdq8cLesAjsQKz4DWBH3gxjeT/view?usp=drive_link',
@@ -80,7 +82,7 @@ export default function UnifiedPortal() {
       description: 'Provide banking information securely for investment funding',
       completed: currentStep > 4,
       icon: CreditCard,
-      action: 'Complete ACH Form',
+      action: 'Request ACH Form',
       type: 'document',
       step: 4,
       url: 'https://drive.google.com/file/d/1Ma2GgUzp-OZi0Etsh_qT1pZiCuQSmzTL/view?usp=drive_link',
@@ -99,11 +101,7 @@ export default function UnifiedPortal() {
     if (item.type === 'upload') {
       // Handle accreditation upload - no login required
       if (!accreditationVerified) {
-        const confirmed = window.confirm('Upload your accreditation verification document?');
-        if (confirmed) {
-          // Simulate file upload and email sending
-          handleAccreditationSubmission();
-        }
+        setUploadDialogOpen(true);
       }
     } else {
       // All other actions require login
@@ -111,18 +109,10 @@ export default function UnifiedPortal() {
     }
   };
 
-  const handleAccreditationSubmission = async () => {
-    try {
-      // In a real implementation, this would upload the file and send email
-      // For now, we'll simulate the process
-      setAccreditationVerified(true);
-      alert('Thank you for submitting your accreditation verification. We have sent your documents to our team for review. Once verified, you will be granted secure access to review the offering documents.');
-      
-      // Simulate sending email to admin
-      console.log('Accreditation documents sent to admin for review');
-    } catch (error) {
-      alert('Error submitting documents. Please try again.');
-    }
+  const handleUploadSuccess = () => {
+    setUploadDialogOpen(false);
+    setAccreditationVerified(true);
+    alert('Thank you for submitting your accreditation verification. We have sent your documents to our team for review. Once verified, you will be granted secure access to review the offering documents.');
   };
 
   const handleDocumentAccess = (item: any) => {
@@ -138,13 +128,13 @@ export default function UnifiedPortal() {
             message = 'Please acknowledge that you have read and understood the PPM before proceeding.';
             break;
           case 2:
-            message = 'Please review and sign the Limited Partnership Agreement (LPA) to confirm your participation.';
+            message = 'Please request and sign the Limited Partnership Agreement (LPA) to confirm your participation.';
             break;
           case 3:
             message = 'Please complete and sign the Subscription Agreement to finalize your investment commitment.';
             break;
           case 4:
-            message = 'Please provide your banking information securely through the ACH Form to set up your investment funding.';
+            message = 'Please request your banking information securely through the ACH Form to set up your investment funding.';
             break;
         }
         
@@ -379,6 +369,16 @@ export default function UnifiedPortal() {
                 Login & Continue
               </Button>
             </div>
+            </DialogContent>
+        </Dialog>
+
+        {/* Document Upload Dialog */}
+        <Dialog open={uploadDialogOpen} onOpenChange={setUploadDialogOpen}>
+          <DialogContent className="sm:max-w-lg">
+            <DialogHeader>
+              <DialogTitle>Upload Accreditation Verification</DialogTitle>
+            </DialogHeader>
+            <DocumentUpload onUploadSuccess={handleUploadSuccess} />
           </DialogContent>
         </Dialog>
       </div>

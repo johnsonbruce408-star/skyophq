@@ -55,7 +55,7 @@ export default function Auth() {
 
   // Redirect if already authenticated
   if (user) {
-    navigate('/investor-portal');
+    navigate('/unified-portal');
     return null;
   }
 
