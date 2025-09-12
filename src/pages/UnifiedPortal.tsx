@@ -24,60 +24,67 @@ export default function UnifiedPortal() {
   const [loginDialogOpen, setLoginDialogOpen] = useState(false);
   const [loginForm, setLoginForm] = useState({ email: "", password: "" });
 
+  const [accreditationVerified, setAccreditationVerified] = useState(false);
+  const [currentStep, setCurrentStep] = useState(0);
+
   const dashboardItems = [
     {
       id: 'accreditation',
-      title: 'Get Accredited',
-      description: 'Complete accreditation verification with GetVerified.com',
-      completed: false,
-      icon: CheckCircle,
-      action: 'Get Verified',
-      type: 'external'
-    },
-    {
-      id: 'aml-kyc',
-      title: 'AML/KYC Verification',
-      description: 'Complete anti-money laundering and know-your-customer checks',
-      completed: false,
-      icon: Building,
-      action: 'Complete AML/KYC',
-      type: 'external'
+      title: 'Accreditation Verification',
+      description: 'Upload your accreditation verification to access offering documents',
+      completed: accreditationVerified,
+      icon: Upload,
+      action: accreditationVerified ? 'Verified' : 'Upload Accreditation Verification to Review PPM',
+      type: 'upload',
+      step: 0
     },
     {
       id: 'ppm',
       title: 'Private Placement Memorandum',
       description: 'Review and acknowledge the PPM',
-      completed: false,
+      completed: currentStep > 1,
       icon: FileText,
-      action: 'Review PPM',
-      type: 'internal'
-    },
-    {
-      id: 'subscription',
-      title: 'Subscription Agreement',
-      description: 'Complete and upload signed subscription agreement',
-      completed: false,
-      icon: FileText,
-      action: 'Upload Agreement',
-      type: 'internal'
+      action: 'Review & Acknowledge PPM',
+      type: 'document',
+      step: 1,
+      url: 'https://drive.google.com/file/d/1xygGA_Z9Cmyndm41eoluX1gtXyRu8HB8/view?usp=drive_link',
+      enabled: accreditationVerified
     },
     {
       id: 'lpa',
       title: 'Limited Partnership Agreement',
-      description: 'Sign the LPA documentation',
-      completed: false,
+      description: 'Review and sign the LPA documentation',
+      completed: currentStep > 2,
       icon: Building,
-      action: 'Sign LPA',
-      type: 'internal'
+      action: 'Review & Sign LPA',
+      type: 'document',
+      step: 2,
+      url: 'https://drive.google.com/file/d/1u5YV0kGhHdu5soi6yfrPlEhtKalSwaAs/view?usp=drive_link',
+      enabled: currentStep >= 2
+    },
+    {
+      id: 'subscription',
+      title: 'Subscription Agreement',
+      description: 'Complete and sign the subscription agreement',
+      completed: currentStep > 3,
+      icon: FileText,
+      action: 'Review & Sign Subscription Agreement',
+      type: 'document',
+      step: 3,
+      url: 'https://drive.google.com/file/d/1OhxBIJYWdq8cLesAjsQKz4DWBH3gxjeT/view?usp=drive_link',
+      enabled: currentStep >= 3
     },
     {
       id: 'ach',
-      title: 'ACH Transfer Setup',
-      description: 'Set up bank transfer for funding',
-      completed: false,
+      title: 'ACH Form',
+      description: 'Provide banking information securely for investment funding',
+      completed: currentStep > 4,
       icon: CreditCard,
-      action: 'Setup ACH',
-      type: 'internal'
+      action: 'Complete ACH Form',
+      type: 'document',
+      step: 4,
+      url: 'https://drive.google.com/file/d/1Ma2GgUzp-OZi0Etsh_qT1pZiCuQSmzTL/view?usp=drive_link',
+      enabled: currentStep >= 4
     }
   ];
 
@@ -89,12 +96,47 @@ export default function UnifiedPortal() {
   ];
 
   const handleItemClick = (item: any) => {
-    if (item.type === 'external') {
-      // Redirect to getverified.com for accreditation and AML/KYC
-      window.open('https://getverified.com', '_blank');
-    } else {
-      // Show login dialog for internal documents
-      setLoginDialogOpen(true);
+    if (item.type === 'upload') {
+      // Handle accreditation upload
+      if (!accreditationVerified) {
+        // Simulate file upload - in production, this would be a proper file upload
+        const confirmed = window.confirm('Upload your accreditation verification document?');
+        if (confirmed) {
+          setAccreditationVerified(true);
+          setCurrentStep(1);
+          alert('Thank you for submitting your accreditation verification. Once verified, you will be granted secure access to review the offering documents.');
+        }
+      }
+    } else if (item.type === 'document' && item.enabled) {
+      // Open document URL and mark step as completed
+      window.open(item.url, '_blank');
+      
+      // Show step-specific message and advance
+      setTimeout(() => {
+        let message = '';
+        switch (item.step) {
+          case 1:
+            message = 'Please acknowledge that you have read and understood the PPM before proceeding.';
+            break;
+          case 2:
+            message = 'Please review and sign the Limited Partnership Agreement (LPA) to confirm your participation.';
+            break;
+          case 3:
+            message = 'Please complete and sign the Subscription Agreement to finalize your investment commitment.';
+            break;
+          case 4:
+            message = 'Please provide your banking information securely through the ACH Form to set up your investment funding.';
+            break;
+        }
+        
+        const confirmed = window.confirm(message + '\n\nClick OK when completed to proceed to the next step.');
+        if (confirmed) {
+          setCurrentStep(item.step + 1);
+          if (item.step === 4) {
+            alert('Thank you. Your documents have been submitted successfully. Welcome to Skyline Prime LP — we will contact you with next steps.');
+          }
+        }
+      }, 1000);
     }
   };
 
@@ -196,18 +238,22 @@ export default function UnifiedPortal() {
                   <Card key={item.id} className={`p-6 transition-all duration-200 hover:shadow-md ${
                     item.completed 
                       ? 'bg-primary/5 border-primary/30' 
-                      : 'bg-card border-border hover:border-primary/30'
+                      : item.enabled === false 
+                        ? 'bg-muted/30 border-muted opacity-60' 
+                        : 'bg-card border-border hover:border-primary/30'
                   }`}>
                     <div className="flex items-center gap-3 mb-3">
                       <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
                         item.completed 
                           ? 'bg-primary text-primary-foreground' 
-                          : 'bg-muted text-muted-foreground'
+                          : item.enabled === false
+                            ? 'bg-muted text-muted-foreground'
+                            : 'bg-muted text-muted-foreground'
                       }`}>
                         {item.completed ? <IconComponent className="w-4 h-4" /> : index + 1}
                       </div>
                       <h3 className={`font-semibold ${
-                        item.completed ? 'text-primary' : 'text-foreground'
+                        item.completed ? 'text-primary' : item.enabled === false ? 'text-muted-foreground' : 'text-foreground'
                       }`}>
                         {item.title}
                       </h3>
@@ -218,10 +264,15 @@ export default function UnifiedPortal() {
                       className="w-full" 
                       variant={item.completed ? "outline" : "default"}
                       onClick={() => handleItemClick(item)}
-                      disabled={item.completed}
+                      disabled={item.completed || item.enabled === false}
                     >
                       {item.completed ? 'Completed' : item.action}
                     </Button>
+                    {item.enabled === false && item.step > 0 && (
+                      <p className="text-xs text-muted-foreground mt-2 text-center">
+                        Complete previous steps to unlock
+                      </p>
+                    )}
                   </Card>
                 );
               })}
@@ -254,6 +305,9 @@ export default function UnifiedPortal() {
                   <div className="w-2 h-2 bg-primary rounded-full"></div>
                   <span>8% Preferred Return + 80/20 Split</span>
                 </div>
+              </div>
+              <div className="mt-4 p-3 bg-muted/20 border border-muted rounded text-xs text-muted-foreground">
+                <strong>For accredited investors only under SEC Reg D 506(c)</strong>
               </div>
             </div>
             
