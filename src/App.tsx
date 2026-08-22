@@ -19,13 +19,14 @@ const App = () => (
       <Sonner />
       <BrowserRouter basename="/skyophq">
         <Routes>
+          {/* Public front door: Bruce Johnson portfolio */}
           <Route path="/" element={<BruceJohnsonPortfolio />} />
 
+          {/* Existing SkyOPHQ / investor application routes remain available */}
           <Route path="/auth" element={<Auth />} />
           <Route path="/unified-portal" element={<UnifiedPortal />} />
           <Route path="/skyline-portal" element={<SkylinePortal />} />
           <Route path="/skyline-ads-landing" element={<SkylineAdsLanding />} />
-
           <Route
             path="/investor-deck"
             element={
@@ -34,7 +35,6 @@ const App = () => (
               </ProtectedInvestorRoute>
             }
           />
-
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
